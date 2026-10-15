@@ -83,7 +83,7 @@ test(
     delete env.ELECTRON_RUN_AS_NODE;
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['.'],
         cwd: root,
         env,
@@ -104,7 +104,8 @@ test(
       'data:image/png;base64,' +
       (await fs.readFile(path.join(root, 'assets/icon.png'))).toString('base64');
     await application.evaluate(
-      ({ desktopCapturer, nativeImage, BrowserWindow, screen }, dataUrl) => {
+      ({ desktopCapturer, nativeImage, BrowserWindow, screen, systemPreferences }, dataUrl) => {
+        if (process.platform === 'darwin') systemPreferences.getMediaAccessStatus = () => 'granted';
         const thumbnail = nativeImage.createFromDataURL(dataUrl);
         desktopCapturer.getSources = async () => {
           const window = BrowserWindow.getAllWindows()[0];

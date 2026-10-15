@@ -5,7 +5,11 @@ const { spawn } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const command = process.argv[2] || 'start';
 const [major, minor] = process.versions.node.split('.').map(Number);
-const portableRuntime = path.join(root, '.tools', 'node.exe');
+const portableRuntime = path.join(
+  root,
+  '.tools',
+  process.platform === 'win32' ? 'node.exe' : 'node',
+);
 const runtime =
   major > 22 || (major === 22 && minor >= 13)
     ? process.execPath

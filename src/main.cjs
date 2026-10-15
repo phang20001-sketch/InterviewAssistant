@@ -11,6 +11,8 @@ const {
   shell,
   globalShortcut,
   screen,
+  systemPreferences,
+  Menu,
 } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs/promises');
@@ -114,7 +116,19 @@ function savedQuestionTitles() {
   ];
 }
 
+function checkScreenPermission() {
+  if (
+    process.platform === 'darwin' &&
+    systemPreferences.getMediaAccessStatus('screen') === 'denied'
+  ) {
+    throw new Error(
+      '请在系统设置 → 隐私与安全性 → 屏幕与系统音频录制中允许本应用，随后完全退出并重新打开应用。开发模式请授权 Electron。',
+    );
+  }
+}
+
 async function captureScreenImage({ sourceId, display } = {}) {
+  checkScreenPermission();
   if (captureInProgress) throw new Error('正在截取屏幕，请稍后重试。');
   const captureWindow = mainWindow;
   if (!captureWindow || captureWindow.isDestroyed())
@@ -355,6 +369,7 @@ function registerHandlers() {
     }
   });
   handle('list-screens', async () => {
+    checkScreenPermission();
     const sources = await desktopCapturer.getSources({
       types: ['screen'],
       thumbnailSize: { width: 400, height: 240 },
@@ -472,7 +487,12 @@ function createWindow() {
     transparent: true,
     hasShadow: false,
     roundedCorners: false,
-    icon: path.join(__dirname, '..', 'assets', 'icon.ico'),
+    icon: path.join(
+      __dirname,
+      '..',
+      'assets',
+      process.platform === 'darwin' ? 'icon.png' : 'icon.ico',
+    ),
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -510,7 +530,13 @@ function createWindow() {
 
 async function ready() {
   app.setName('Interview Studio');
-  app.setAppUserModelId('com.squirrel.InterviewStudio.InterviewStudio');
+  if (process.platform === 'darwin') {
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate([{ role: 'appMenu' }, { role: 'editMenu' }, { role: 'windowMenu' }]),
+    );
+  }
+  if (process.platform === 'win32')
+    app.setAppUserModelId('com.squirrel.InterviewStudio.InterviewStudio');
   const dataDirectory =
     !app.isPackaged && process.env.INTERVIEW_STUDIO_DATA_DIR
       ? path.resolve(process.env.INTERVIEW_STUDIO_DATA_DIR)
@@ -527,16 +553,26 @@ async function ready() {
     ];
     callback({ responseHeaders: headers });
   });
-  session.defaultSession.setPermissionRequestHandler((contents, permission, callback, details) => {
-    const allowed =
-      permission === 'clipboard-sanitized-write' ||
-      (permission === 'media' && details.mediaTypes?.every((type) => type === 'audio'));
-    callback(
-      contents === mainWindow?.webContents &&
+  session.defaultSession.setPermissionRequestHandler(
+    async (contents, permission, callback, details) => {
+      const allowed =
+        permission === 'clipboard-sanitized-write' ||
+        (permission === 'media' && details.mediaTypes?.every((type) => type === 'audio'));
+      const trustedRequest =
+        contents === mainWindow?.webContents &&
         contents.getURL().startsWith('studio://app/') &&
-        allowed,
-    );
-  });
+        allowed;
+      if (trustedRequest && permission === 'media' && process.platform === 'darwin') {
+        try {
+          callback(await systemPreferences.askForMediaAccess('microphone'));
+        } catch {
+          callback(false);
+        }
+        return;
+      }
+      callback(trustedRequest);
+    },
+  );
   session.defaultSession.setPermissionCheckHandler(
     (contents, permission, origin) =>
       contents === mainWindow?.webContents &&
@@ -592,6 +628,8 @@ else {
   app.on('activate', () => {
     if (!mainWindow && store) createWindow();
   });
-  app.on('window-all-closed', () => app.quit());
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+  });
   app.on('will-quit', () => globalShortcut.unregisterAll());
 }

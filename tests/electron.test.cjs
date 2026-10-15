@@ -5,6 +5,7 @@ const path = require('node:path');
 const http = require('node:http');
 const { once } = require('node:events');
 const { _electron } = require('playwright');
+const { installScreenFixture } = require('./helpers/screen-fixture.cjs');
 const {
   editActiveModel,
   assertSavedModelKey,
@@ -85,11 +86,12 @@ test(
     delete env.ELECTRON_RUN_AS_NODE;
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream', '.'],
         cwd: root,
         env,
       });
+      await installScreenFixture(application);
       const page = await application.firstWindow();
       page.setDefaultTimeout(10000);
       await page.waitForFunction(async () => {
@@ -116,6 +118,7 @@ test(
     );
     assert.equal(requests.length, 0);
     await page.locator('#copy-answer').click();
+    await page.waitForFunction(() => document.body.textContent.includes('回答已复制。'));
     assert.match(
       await application.evaluate(({ clipboard }) => clipboard.readText()),
       /Cache Aside/,

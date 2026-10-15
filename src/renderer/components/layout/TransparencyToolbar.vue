@@ -1,4 +1,5 @@
 <script setup>
+import { modifierLabel } from '../../services/platform.js';
 import { computed } from 'vue';
 import { useWorkspace } from '../../composables/useWorkspace.js';
 import { useCaptureControls } from '../common/useCaptureControls.js';
@@ -41,7 +42,7 @@ const sendDisabled = computed(
         id="transparent-send"
         type="button"
         class="transparent-action"
-        title="发送输入的问题（Ctrl Enter）"
+        :title="`发送输入的问题（${modifierLabel} Enter）`"
         :disabled="sendDisabled"
         @click="askQuestion"
       >
@@ -65,7 +66,7 @@ const sendDisabled = computed(
         class="transparent-action exit-transparency"
         data-window-control
         aria-label="恢复完整界面"
-        title="恢复完整界面（Esc / Ctrl Shift T）"
+        :title="`恢复完整界面（Esc / ${modifierLabel} Shift T）`"
         :hidden="!windowState.transparentMode"
         :disabled="transparencyPending"
         @click="setTransparentMode(false)"

@@ -8,6 +8,7 @@ const http = require('node:http');
 const { once } = require('node:events');
 const { createHash } = require('node:crypto');
 const { _electron } = require('playwright');
+const { installScreenFixture } = require('./helpers/screen-fixture.cjs');
 
 const root = path.resolve(__dirname, '..');
 const work = path.join(root, 'work');
@@ -84,11 +85,12 @@ test(
     };
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream', '.'],
         cwd: root,
         env,
       });
+      await installScreenFixture(application);
       page = await application.firstWindow();
       page.setDefaultTimeout(10000);
       page.on('pageerror', (error) => errors.push(error.message));

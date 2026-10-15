@@ -1,4 +1,5 @@
 <script setup>
+import { modifierLabel } from '../../../services/platform.js';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import AppIcon from '../../../components/common/AppIcon.vue';
 import { useWorkspace } from '../../../composables/useWorkspace.js';
@@ -181,7 +182,7 @@ onBeforeUnmount(() => {
         >
           <AppIcon name="sparkles" />
           <span id="ask-label">{{ isBusy ? '正在生成' : '生成回答' }}</span>
-          <kbd>Ctrl ↵</kbd>
+          <kbd>{{ modifierLabel }} ↵</kbd>
         </button>
       </div>
     </div>

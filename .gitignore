@@ -48,3 +48,8 @@ workspace.before-*.json
 /*.7z
 /*.nupkg
 /*.blockmap
+
+# Platform distribution bundles are generated locally or published via Releases.
+/scripts/macos/installers/
+/scripts/windows/installers/*
+!/scripts/windows/installers/.gitkeep

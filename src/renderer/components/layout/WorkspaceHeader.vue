@@ -1,4 +1,5 @@
 <script setup>
+import { modifierLabel } from '../../services/platform.js';
 import { useWorkspace } from '../../composables/useWorkspace.js';
 import AppIcon from '../common/AppIcon.vue';
 import { useCaptureControls } from '../common/useCaptureControls.js';
@@ -40,7 +41,7 @@ const viewNames = {
         data-window-control
         :aria-pressed="String(windowState.transparentMode)"
         :disabled="transparencyPending"
-        title="只显示输入与回答（Ctrl Shift T）"
+        :title="`只显示输入与回答（${modifierLabel} Shift T）`"
         @click="toggleTransparentMode()"
       >
         <AppIcon name="layers" />透明化

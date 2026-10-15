@@ -53,7 +53,7 @@ test(
     delete env.ELECTRON_RUN_AS_NODE;
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['.'],
         cwd: root,
         env,

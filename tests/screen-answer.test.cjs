@@ -62,7 +62,7 @@ test(
     const errors = [];
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['.'],
         cwd: root,
         env,
@@ -83,7 +83,8 @@ test(
       'data:image/png;base64,' +
       (await fs.readFile(path.join(root, 'assets/icon.png'))).toString('base64');
     const expectedImage = await application.evaluate(
-      ({ desktopCapturer, nativeImage, BrowserWindow, screen }, dataUrl) => {
+      ({ desktopCapturer, nativeImage, BrowserWindow, screen, systemPreferences }, dataUrl) => {
+        if (process.platform === 'darwin') systemPreferences.getMediaAccessStatus = () => 'granted';
         const target = nativeImage.createFromDataURL(dataUrl).resize({ width: 96, height: 96 });
         const other = nativeImage.createFromDataURL(dataUrl).resize({ width: 32, height: 32 });
         globalThis.__screenAnswerCapture = {

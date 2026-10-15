@@ -97,7 +97,7 @@ test(
 
     async function launch() {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['.'],
         cwd: root,
         env,
@@ -442,24 +442,28 @@ test(
     await waitForProfileDialogClosed();
 
     const image = (await fs.readFile(path.join(root, 'assets/icon.png'))).toString('base64');
-    await application.evaluate(({ desktopCapturer, nativeImage, screen, BrowserWindow }, image) => {
-      const original = desktopCapturer.getSources;
-      const source = {
-        id: 'screen:0:0',
-        display_id: String(
-          screen.getDisplayMatching(BrowserWindow.getAllWindows()[0].getBounds()).id,
-        ),
-        name: '多模型测试屏幕',
-        thumbnail: nativeImage.createFromBuffer(Buffer.from(image, 'base64')),
-      };
-      globalThis.__modelProfilesCapture = { started: false, original };
-      desktopCapturer.getSources = async () => {
-        globalThis.__modelProfilesCapture.started = true;
-        return new Promise((resolve) => {
-          globalThis.__modelProfilesCapture.release = () => resolve([source]);
-        });
-      };
-    }, image);
+    await application.evaluate(
+      ({ desktopCapturer, nativeImage, screen, BrowserWindow, systemPreferences }, image) => {
+        if (process.platform === 'darwin') systemPreferences.getMediaAccessStatus = () => 'granted';
+        const original = desktopCapturer.getSources;
+        const source = {
+          id: 'screen:0:0',
+          display_id: String(
+            screen.getDisplayMatching(BrowserWindow.getAllWindows()[0].getBounds()).id,
+          ),
+          name: '多模型测试屏幕',
+          thumbnail: nativeImage.createFromBuffer(Buffer.from(image, 'base64')),
+        };
+        globalThis.__modelProfilesCapture = { started: false, original };
+        desktopCapturer.getSources = async () => {
+          globalThis.__modelProfilesCapture.started = true;
+          return new Promise((resolve) => {
+            globalThis.__modelProfilesCapture.release = () => resolve([source]);
+          });
+        };
+      },
+      image,
+    );
     await page.locator('#capture-answer').click();
     await application.evaluate(async () => {
       for (let attempt = 0; attempt < 100; attempt += 1) {
