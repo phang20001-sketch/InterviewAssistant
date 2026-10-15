@@ -33,7 +33,7 @@ _主界面：左侧切换面试助手、模拟面试、题库练习、面试记�
 
 **只使用软件，无需安装 Node.js，也不用运行开发脚本。**
 
-1. 向维护者获取 Mac 应用 ZIP；仓库发布 Releases 后也可从 Releases 下载。当前尚未发布 Releases。
+1. [直接下载 Mac Apple 芯片版 ZIP](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-macos.1/Interview.Studio-darwin-arm64-1.5.0.zip)，或打开 [Releases 发布页面](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1)，在 Assets 中下载应用包。
 2. Apple 芯片的 Mac 双击解压 `darwin-arm64` ZIP。
 3. 将 `Interview Studio.app` 拖入“应用程序”，从那里双击打开。
 4. 按系统提示授予麦克风、屏幕录制权限，然后在“模型与设置”配置自己的 AI 服务。也可以先使用演示模式。
@@ -47,7 +47,7 @@ _主界面：左侧切换面试助手、模拟面试、题库练习、面试记�
 
 Windows 本次只预留目录和脚本，不提供或验证安装包。Mac 当前包未签名公证，首次打开的处理见 Mac 说明；Intel Mac 需另行生成 x64 包。
 
-`installers/` 是本机构建生成目录，不随 Git 提交。若你拿到的是 GitHub 源码、目录里没有安装包，请下载维护者提供的分发包或 Releases 附件。源码 ZIP 不能直接当应用运行。后续执行对应平台的打包脚本，会自动将新安装包复制到各自的 `installers/`。
+`installers/` 是本机构建生成目录，不随 Git 提交。若你拿到的是 GitHub 源码、目录里没有安装包，请下载 [Releases 附件](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1) 或维护者提供的分发包。源码 ZIP 不能直接当应用运行。后续执行对应平台的打包脚本，会自动将新安装包复制到各自的 `installers/`。
 
 安装包可由维护者放到 GitHub 仓库的 Releases 页面。当前本地提供的 Mac 包见上表；Windows 安装方式作为后续参考保留在其独立说明中。
 
