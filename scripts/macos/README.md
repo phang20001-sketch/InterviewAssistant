@@ -4,13 +4,13 @@
 
 不需要 Node.js、npm 或开发工具，也不用运行旁边的 `.command` 脚本。
 
-1. 向维护者获取 Mac 应用 ZIP，或在维护者发布后从仓库 Releases 下载。如果拿到的是完整分发文件夹，应用包在本文件夹的 `installers/` 中。
+1. [下载 Mac Apple 芯片版 ZIP](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-macos.1/Interview.Studio-darwin-arm64-1.5.0.zip)。也可从 [Releases 页面](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1) 的 Assets 下载。如果拿到的是完整分发文件夹，应用包在本文件夹的 `installers/` 中。
 2. Apple 芯片的 Mac 双击解压名称包含 `darwin-arm64` 的 ZIP。这个 ZIP 本身就是应用分发包，无需下载项目源码。
 3. 把解压后的 `Interview Studio.app` 拖入 Finder 的“应用程序”文件夹。
 4. 从“应用程序”打开 Interview Studio；以后直接打开这个应用。
 5. 首次进入可使用演示模式；要使用真实 AI，在“模型与设置”配置模型地址、名称和 API Key。
 
-仓库尚未发布 Releases；目前可向维护者获取本地生成的应用包。当前提供 Apple 芯片版，不能将它当作 Intel 版使用。Intel Mac 需要另行构建 `darwin-x64` 包。
+Mac 应用包已发布到 Releases。当前提供 Apple 芯片版，不能将它当作 Intel 版使用。Intel Mac 需要另行构建 `darwin-x64` 包。
 
 ### 第一次打开与权限
 
