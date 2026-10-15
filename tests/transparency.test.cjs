@@ -44,7 +44,7 @@ test(
     delete env.ELECTRON_RUN_AS_NODE;
     const launch = async () => {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['.'],
         cwd: root,
         env,
@@ -367,9 +367,13 @@ test(
     assert.deepEqual(errors, []);
 
     // Closing from our custom titlebar must work, and the next launch starts normal.
-    const closed = application.waitForEvent('close');
+    const closed =
+      process.platform === 'darwin'
+        ? page.waitForEvent('close')
+        : application.waitForEvent('close');
     await page.locator('#window-close').click();
     await closed;
+    if (process.platform === 'darwin') await application.close();
     application = null;
     await launch();
     assert.deepEqual(await page.evaluate(() => window.desktop.getWindowState()), {

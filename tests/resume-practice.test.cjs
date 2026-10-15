@@ -98,7 +98,7 @@ test(
     }
     async function launch() {
       application = await _electron.launch({
-        executablePath: path.join(root, 'node_modules/electron/dist/electron.exe'),
+        executablePath: require('electron'),
         args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream', '.'],
         cwd: root,
         env,

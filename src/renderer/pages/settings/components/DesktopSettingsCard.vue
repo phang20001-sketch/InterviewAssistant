@@ -1,4 +1,5 @@
 <script setup>
+import { isMac } from '../../../services/platform.js';
 import AppIcon from '../../../components/common/AppIcon.vue';
 
 defineProps({
@@ -31,7 +32,11 @@ const emit = defineEmits(['open-data-folder']);
       <label class="toggle-setting">
         <span>
           <strong>系统内容保护</strong>
-          <small>请求系统限制窗口被截屏；实际效果取决于系统与录屏软件。</small>
+          <small>{{
+            isMac
+              ? 'macOS 上使用 ScreenCaptureKit 的软件仍可能捕获此窗口。'
+              : '请求系统限制窗口被截屏；实际效果取决于系统与录屏软件。'
+          }}</small>
         </span>
         <input
           id="setting-contentProtection"

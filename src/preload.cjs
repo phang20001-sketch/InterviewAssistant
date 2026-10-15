@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const invoke = (channel, ...args) => ipcRenderer.invoke('studio:' + channel, ...args);
 contextBridge.exposeInMainWorld('desktop', {
+  platform: process.platform,
   bootstrap: () => invoke('bootstrap'),
   getWindowState: () => invoke('get-window-state'),
   setTransparentMode: (enabled) => invoke('set-transparent-mode', enabled),
