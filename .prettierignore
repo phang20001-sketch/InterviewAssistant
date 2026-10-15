@@ -1,0 +1,8 @@
+node_modules/
+.tools/
+out/
+dist/
+work/
+outputs/
+assets/
+package-lock.json

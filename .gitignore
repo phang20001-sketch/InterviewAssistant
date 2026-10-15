@@ -1,0 +1,50 @@
+# Dependencies and generated application files.
+node_modules/
+/dist/
+/out/
+/.tools/
+/work/
+/outputs/
+
+# Test reports, coverage, caches, and editor/OS files.
+/coverage/
+/playwright-report/
+/test-results/
+.cache/
+.vite/
+.nyc_output/
+*.tsbuildinfo
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+
+# Local configuration and secrets. Keep safe example configuration files.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pfx
+*.p12
+*.key
+*.pem
+!*.public.pem
+
+# Runtime data and application-created backups must never be committed.
+workspace.json
+workspace.json.tmp
+workspace.json.bak
+workspace.json.before-*.bak
+workspace.before-*.json
+
+# Release downloads belong in GitHub Releases, rather than source commits.
+/*.exe
+/*.msi
+/*.msix
+/*.appx
+/*.zip
+/*.7z
+/*.nupkg
+/*.blockmap

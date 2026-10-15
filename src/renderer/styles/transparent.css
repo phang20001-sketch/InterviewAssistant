@@ -1,0 +1,344 @@
+.transparent-toolbar {
+  position: fixed;
+  top: 6px;
+  left: 18px;
+  right: 10px;
+  z-index: 18;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--transparent-text-color, #f8fafc);
+  font-size: 11px;
+  text-shadow:
+    0 1px 2px #000,
+    0 0 4px #000;
+  pointer-events: none;
+  opacity: 1;
+}
+.transparent-toolbar-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
+  gap: 6px;
+  height: 26px;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.transparent-action {
+  min-width: 44px;
+  border: 0;
+  border-radius: 0;
+  padding: 3px 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 11px;
+  line-height: 20px;
+  text-shadow: inherit;
+  opacity: 0.85;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.transparent-action:hover,
+.transparent-action:focus-visible,
+.transparent-action:disabled {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.transparent-action:hover,
+.transparent-action:focus-visible {
+  opacity: 1;
+}
+.transparent-action:disabled {
+  opacity: 0.4;
+}
+.transparent-action > span {
+  opacity: var(--transparent-text-opacity, 1);
+}
+.transparent-capture-answer {
+  min-width: 84px;
+}
+.transparent-opacity-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.transparent-opacity-control {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+  cursor: pointer;
+}
+.transparent-control-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  width: 64px;
+  flex: none;
+  white-space: nowrap;
+  opacity: var(--transparent-text-opacity, 1);
+}
+.transparent-opacity-control output {
+  font-variant-numeric: tabular-nums;
+  min-width: 30px;
+  text-align: right;
+}
+.transparent-opacity-control input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: none !important;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.transparent-opacity-control input::-webkit-slider-runnable-track {
+  height: 1px;
+  border-radius: 0;
+  background: rgb(255 255 255 / 12%);
+}
+.transparent-opacity-control input::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 2px;
+  height: 14px;
+  margin-top: -6.5px;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 60%);
+}
+.transparent-opacity-control input:focus-visible {
+  outline: 1px solid rgb(255 255 255 / 24%);
+  outline-offset: 2px;
+}
+
+/* Reuse the input and conversation nodes so toggling never replaces an active reply. */
+html.transparent-mode,
+body.transparent-mode {
+  background: transparent !important;
+  overflow: hidden;
+}
+body.transparent-mode {
+  --transparent-text-color: #f8fafc;
+}
+body.transparent-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgb(23 43 36 / var(--transparent-background-opacity, 0));
+  pointer-events: none;
+  z-index: 0;
+}
+body.transparent-mode .app-shell {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100vh;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+body.transparent-mode .sidebar,
+body.transparent-mode .topbar,
+body.transparent-mode #startup-error,
+body.transparent-mode #view-assistant > .page-heading,
+body.transparent-mode #demo-banner,
+body.transparent-mode .card-header,
+body.transparent-mode .mode-tabs,
+body.transparent-mode .quick-question-area,
+body.transparent-mode .question-content > :not(#question-input),
+body.transparent-mode .answer-footer,
+body.transparent-mode .workspace-bottom,
+body.transparent-mode .message-meta,
+body.transparent-mode #answer-body > :not(.message-block) {
+  display: none !important;
+}
+body.transparent-mode .window-titlebar {
+  left: 224px;
+  right: 0;
+  width: auto;
+  height: 30px;
+  background: transparent;
+  border: 0;
+}
+body.transparent-mode .window-caption,
+body.transparent-mode .window-controls {
+  display: none;
+}
+body.transparent-mode .main-panel {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+  margin: 0;
+  background: transparent;
+}
+body.transparent-mode .page-scroll {
+  width: 100%;
+  height: 100vh;
+  max-width: none;
+  margin: 0;
+  padding: 78px 18px 16px;
+  background: transparent;
+  overflow: hidden;
+}
+body.transparent-mode #view-assistant {
+  height: 100%;
+}
+body.transparent-mode .assistant-grid {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+body.transparent-mode .card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.transparent-mode .question-card {
+  flex: none;
+  overflow: visible;
+}
+body.transparent-mode .question-content {
+  padding: 0;
+  line-height: 0;
+}
+body.transparent-mode #question-input {
+  display: block;
+  width: 100%;
+  height: 80px;
+  min-height: 44px;
+  max-height: 150px;
+  padding: 0;
+  margin: 0;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--transparent-text-color);
+  caret-color: var(--transparent-text-color);
+  font-size: var(--transparent-font-size, 16px);
+  line-height: 1.8;
+  text-shadow:
+    0 1px 2px #000,
+    0 0 5px #000,
+    1px 0 2px #000,
+    -1px 0 2px #000;
+  box-shadow: none !important;
+  opacity: var(--transparent-text-opacity, 1);
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+body.transparent-mode #question-input::placeholder {
+  color: transparent;
+  text-shadow: none;
+}
+body.transparent-mode .answer-card {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+body.transparent-mode #answer-body {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  padding: 0;
+  overflow: auto;
+  background: transparent;
+}
+body.transparent-mode .message-block {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+body.transparent-mode .question-bubble,
+body.transparent-mode .markdown-content {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--transparent-font-size, 16px);
+  line-height: 1.85;
+  color: var(--transparent-text-color);
+  text-shadow:
+    0 1px 2px #000,
+    0 0 5px #000,
+    1px 0 2px #000,
+    -1px 0 2px #000;
+  box-shadow: none;
+  opacity: var(--transparent-text-opacity, 1);
+}
+body.transparent-mode .markdown-content h2,
+body.transparent-mode .markdown-content h3 {
+  color: inherit;
+  font-size: calc(var(--transparent-font-size, 16px) * 1.0625);
+}
+body.transparent-mode .markdown-content pre,
+body.transparent-mode .markdown-content code:not(pre code),
+body.transparent-mode .markdown-content blockquote {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+body.transparent-mode .markdown-content pre {
+  padding: 0;
+  font-size: calc(var(--transparent-font-size, 16px) * 0.875);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+body.transparent-mode .markdown-content code:not(pre code) {
+  padding: 0;
+  font-size: calc(var(--transparent-font-size, 16px) * 0.875);
+}
+body.transparent-mode .markdown-content blockquote {
+  padding-left: 12px;
+}
+body.transparent-mode #question-input::-webkit-scrollbar,
+body.transparent-mode #answer-body::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+body.transparent-mode #question-input::-webkit-scrollbar-thumb,
+body.transparent-mode #answer-body::-webkit-scrollbar-thumb {
+  background: #ffffff40;
+  border-radius: 6px;
+}
+body.transparent-mode .toast-container {
+  left: 50%;
+  bottom: 12px;
+}
+body.transparent-mode .toast {
+  display: none;
+}
+body.transparent-mode .toast.error {
+  display: block;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  color: var(--transparent-text-color);
+  text-shadow:
+    0 1px 2px #000,
+    0 0 4px #000;
+}

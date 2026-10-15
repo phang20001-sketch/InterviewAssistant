@@ -1,0 +1,77 @@
+/* The native window is transparent; the normal workspace paints its own surface. */
+:root {
+  background: transparent;
+}
+body {
+  background: #f7f8fa;
+}
+.app-shell {
+  padding-top: 36px;
+  background: #f7f8fa;
+}
+.sidebar {
+  top: 36px;
+}
+.main-panel {
+  min-height: calc(100vh - 36px);
+}
+.window-titlebar {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  z-index: 15;
+  -webkit-app-region: drag;
+  app-region: drag;
+  user-select: none;
+}
+.window-caption {
+  padding-left: 16px;
+  color: #66756b;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+  pointer-events: none;
+}
+.window-controls {
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.window-control {
+  width: 46px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font:
+    19px/1 'Segoe UI',
+    sans-serif;
+  border-radius: 0;
+  color: #68736c;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.window-control:hover {
+  background: #edf1ec;
+  color: #263b2c;
+}
+.window-close:hover {
+  background: #c54343;
+  color: #fff;
+}
+.window-control:focus-visible {
+  outline-offset: -3px;
+}
+.transparency-button {
+  white-space: nowrap;
+  gap: 7px;
+}
+.capture-answer-button {
+  white-space: nowrap;
+  gap: 7px;
+}

@@ -1,0 +1,343 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 224px;
+  min-width: 224px;
+  background: var(--sidebar);
+  color: #b7c1bb;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0 auto 0 0;
+  padding: 32px 18px 0;
+  z-index: 4;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 8px;
+  color: #fff;
+}
+.brand-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 37px;
+  gap: 4px;
+  transform: rotate(-14deg);
+}
+.brand-symbol span {
+  width: 6px;
+  border-radius: 2px;
+  background: var(--lime);
+  height: 26px;
+}
+.brand-symbol span:nth-child(2) {
+  height: 35px;
+}
+.brand-symbol span:nth-child(3) {
+  height: 20px;
+}
+.brand-copy {
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
+}
+.brand-copy small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #93a198;
+  font-weight: 500;
+  margin-top: 3px;
+}
+.workspace-badge {
+  margin: 31px 0 30px;
+  border: 1px solid #405046;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px;
+  border-radius: 9px;
+  color: #e4eae5;
+  font-size: 12px;
+}
+.workspace-badge small {
+  display: block;
+  color: #91a096;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.workspace-avatar {
+  width: 29px;
+  height: 29px;
+  border-radius: 7px;
+  background: #43584b;
+  color: #e6eeda;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+}
+.workspace-chevron {
+  margin-left: auto;
+  color: #819085;
+}
+.nav-label {
+  font-size: 9px;
+  color: #7b8e80;
+  letter-spacing: 1.7px;
+  font-weight: 600;
+  margin: 0 13px 11px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  text-align: left;
+  border-radius: 7px;
+  padding: 12px 13px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #a5b3a9;
+  font-weight: 500;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+}
+.nav-item:hover {
+  color: #e6ecdf;
+  background: #ffffff08;
+}
+.nav-item.active {
+  background: #d4f577;
+  color: #253728;
+  font-weight: 650;
+}
+.nav-key {
+  font-size: 13px;
+  margin-left: auto;
+  color: #4b613c;
+}
+.nav-tag {
+  font-size: 9px;
+  border: 1px solid #57694b;
+  border-radius: 4px;
+  padding: 0 5px;
+  margin-left: auto;
+  color: #b4cb95;
+}
+.nav-count {
+  margin-left: auto;
+  font-size: 10px;
+  background: #ffffff0b;
+  border-radius: 4px;
+  padding: 0 6px;
+}
+.sidebar-divider {
+  margin: 20px 12px 14px;
+  height: 1px;
+  background: #ffffff12;
+}
+.sidebar-spacer {
+  flex: 1;
+  min-height: 60px;
+}
+.practice-card {
+  border: 1px solid #425143;
+  border-radius: 10px;
+  padding: 16px 14px;
+  margin-bottom: 20px;
+  background: linear-gradient(130deg, #2b3d2a, #1e3228);
+}
+.practice-orbit {
+  display: block;
+  font-size: 35px;
+  line-height: 1;
+  color: #d4f577;
+  margin-bottom: 15px;
+}
+.practice-card strong {
+  font-size: 12px;
+  font-weight: 550;
+  color: #e7ebdf;
+}
+.practice-card p {
+  font-size: 10px;
+  color: #92a18e;
+  line-height: 1.9;
+  margin-top: 6px;
+}
+.practice-card button {
+  margin-top: 15px;
+  padding: 8px 10px;
+  background: #cce7a1;
+  color: #283c29;
+  border-radius: 5px;
+  font-size: 11px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: #89998e;
+  padding: 16px 2px;
+  border-top: 1px solid #ffffff0e;
+}
+.sidebar-footer > span:last-child {
+  margin-left: auto;
+  color: #718679;
+  font-size: 9px;
+}
+.status-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #83aa60;
+  flex-shrink: 0;
+}
+.main-panel {
+  margin-left: 224px;
+  width: calc(100% - 224px);
+  min-width: 0;
+}
+.topbar {
+  height: 69px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 34px;
+  gap: 14px;
+}
+.breadcrumb {
+  font-size: 11px;
+  color: #8c938e;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.breadcrumb span {
+  color: #d6dcd7;
+}
+.breadcrumb strong {
+  font-size: 11px;
+  color: #4e5751;
+  font-weight: 500;
+}
+.topbar-right {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.private-label {
+  font-size: 10px;
+  color: #949c96;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.private-label svg {
+  width: 13px;
+  height: 13px;
+}
+.profile-avatar {
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #edf0e7;
+  color: #68745e;
+  border: 3px solid #f8f9f6;
+}
+.page-scroll {
+  padding: 32px 34px 22px;
+  max-width: 1760px;
+  margin: auto;
+}
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #8b968b;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+h1 {
+  font-size: 25px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  color: #28362e;
+}
+.heading-star {
+  font-family: Georgia, serif;
+  display: inline-block;
+  color: #a5bb6d;
+  font-size: 34px;
+  font-weight: 400;
+  vertical-align: -3px;
+  margin-left: 12px;
+}
+.page-heading p {
+  color: #909791;
+  font-size: 11px;
+  margin-top: 8px;
+}
+.heading-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.startup-error {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  background: #fff4eb;
+  border: 1px solid #ead9c8;
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 20px;
+  color: #a1825f;
+}
+.startup-error > span svg {
+  height: 25px;
+  width: 25px;
+}
+.startup-error strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.startup-error p {
+  font-size: 10px;
+  color: #b69c80;
+  margin-top: 4px;
+}
+.startup-error > .button {
+  margin-left: auto;
+}
