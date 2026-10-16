@@ -4,13 +4,17 @@ Interview Studio 是一个用 Electron + Vue 3 开发的面试练习工具，支
 
 应用无需注册。你可以先用演示模式熟悉界面，再接入自己的 AI 服务。简历、设置和练习记录保存在本机。
 
-当前版本：**1.5.0**。
+当前源码与 Windows 发布版本：**1.5.1**。Mac 当前已发布版本仍为 **1.5.0**，请按系统选择对应下载。
 
 ![面试工作台主界面](docs/images/01-overview.png)
 
 _主界面：左侧切换面试助手、模拟面试、题库练习、面试记录与模型设置。_
 
-> 截图中的简历、模型配置和回答均为演示数据。实际使用时，请填写服务商提供的地址、模型名称和 API Key。`localhost` 是截图使用的本地测试地址。
+> 本文 17 张使用截图来自新版 Windows 1.5.1 的真实软件窗口，使用隔离的示例资料，只包含软件画面。Mac 当前发布的 1.5.0 包仍为原有界面，不代表已经包含新版配色与图标。截图中的简历、模型配置和回答均为演示数据；实际使用时，请填写服务商提供的地址、模型名称和 API Key。`localhost` 是截图使用的本地测试地址。
+
+### 1.5.1 界面更新
+
+Windows 1.5.1 采用石墨灰侧栏、暖白工作区、钢蓝选中提示与黑灰主按钮；更新应用图标和空状态插图，并提高正文、辅助文字与输入框的可读性。原有问答、面试、题库及本地保存流程继续保留。
 
 ## 目录
 
@@ -37,16 +41,16 @@ _主界面：左侧切换面试助手、模拟面试、题库练习、面试记�
 
 | 系统           | 下载                                                                                                                                                                                                                                                                                    | 安装方式                                                             |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Windows x64    | [EXE 安装包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-Setup-1.5.0.exe) / [ZIP 便携包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-win32-x64-1.5.0.zip) | EXE 安装后从开始菜单打开；ZIP 完整解压后运行 `InterviewStudio.exe`。 |
+| Windows x64    | [EXE 安装包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.1-windows.1/InterviewStudio-Setup-1.5.1.exe) / [ZIP 便携包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.1-windows.1/InterviewStudio-win32-x64-1.5.1.zip) | EXE 安装后从开始菜单打开；ZIP 完整解压后运行 `InterviewStudio.exe`。 |
 | Mac Apple 芯片 | [应用 ZIP](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-macos.1/Interview.Studio-darwin-arm64-1.5.0.zip)                                                                                                                                            | 双击解压，将 `Interview Studio.app` 拖入“应用程序”后打开。           |
 
-发布详情与附件见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1) 和 [Mac Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1)。请选择 Assets 中的应用包；“Source code”是源码，不能直接运行。Intel Mac 暂无下载包。
+发布详情与附件见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.1-windows.1) 和 [Mac Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1)。请选择 Assets 中的应用包；“Source code”是源码，不能直接运行。Intel Mac 暂无下载包。
 
 ### Windows 安装与更新
 
 1. 普通使用推荐下载 EXE，双击安装后从开始菜单打开 Interview Studio。
 2. 使用 ZIP 时，先右键“全部解压”，再运行解压目录中的 `InterviewStudio.exe`。不要直接在 ZIP 内运行，也不要只把 EXE 拷贝出来；同目录的其他文件也是运行必需的。
-3. 本次为 1.5.0 的 Windows 发布包。已安装同版本时，先关闭旧程序退出，再把本次 ZIP 完整解压到新目录，运行其中的新 EXE；软件会读取原有本地资料。不要混拷两次打包的文件，也不要依赖同版本安装包一定替换已有程序。隐藏过窗口时，先恢复窗口再关闭。
+3. 本次 Windows 版本为 1.5.1。已安装 1.5.0 时，先退出旧程序，再运行 1.5.1 Setup 升级；更换应用不会删除原有本地资料。若同版本重装未替换程序，可将 ZIP 完整解压到新目录后启动，其中的新 EXE 会读取原有资料。不要混拷不同构建的文件，也不要删除数据目录。隐藏过窗口时，先恢复窗口再关闭。
 4. 打开后在“模型与设置”配置自己的服务，或先使用演示模式。ZIP 版也把资料保存到当前用户的数据目录，不随解压目录自动迁移。
 
 当前应用未配置商业代码签名，Windows 可能提示未知发布者。请确认下载来自上述仓库的 Release，再按系统提供的提示处理；如果设备策略不允许打开，请联系设备管理员，不要关闭系统安全防护。
@@ -457,12 +461,12 @@ npm start
 
 页面专用组件与逻辑放在对应页面目录，跨页面内容放在公共组件、composables 或 services 中。源码使用两格缩进与按结构换行，格式规则见 `.prettierrc.json` 和 `.editorconfig`；不要直接修改编译产物。
 
-运行 `npm run make` 后，1.5.0 的产物位于：
+运行 `npm run make` 后，产物按 `package.json` 中的版本放入 `out/<版本>/`。当前 Windows 1.5.1 的产物位于：
 
-- 安装包：`out/1.5.0/make/squirrel.windows/x64/InterviewStudio-Setup.exe`。
-- Windows 便携包：`out/1.5.0/make/zip/win32/x64/` 下的 ZIP。
-- macOS ZIP：`out/1.5.0/make/zip/darwin/arm64/` 或 `x64/`。
-- macOS 应用：`out/1.5.0/Interview Studio-darwin-架构/Interview Studio.app`。
+- 安装包：`out/1.5.1/make/squirrel.windows/x64/InterviewStudio-Setup.exe`。
+- Windows 便携包：`out/1.5.1/make/zip/win32/x64/` 下的 ZIP。
+
+macOS 本地构建相应写入 `out/<版本>/make/zip/darwin/arm64/` 或 `x64/`，应用位于 `out/<版本>/Interview Studio-darwin-架构/Interview Studio.app`。Mac 当前已发布附件仍为 1.5.0，当前源码构建不等于该旧附件已更新。
 
 在 Mac 上指定目标架构（Intel 构建仍需在 Intel Mac 上验证）：
 
@@ -473,16 +477,17 @@ npm run make -- --platform=darwin --arch=x64
 
 桌面回归测试会打开真实窗口，截图业务用例使用本地合成图片，不读取用户桌面；纯业务测试不需要真实模型账号。Mac 的麦克风授权、系统截图和多显示器表现还应进行人工验证。
 
-### 本次 Windows 发布验证
+### Windows 验证范围
 
-本次 Windows x64 包在 Windows 10 x64 上构建和检查：
+本次 **Windows 1.5.1** 已完成以下检查，附件见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.1-windows.1)：
 
-- 源码测试：**142 项通过、0 项失败**；1 项 Mac 专项测试在 Windows 上跳过。
-- `npm run make`：成功生成 EXE 与 ZIP，并收集到 `scripts/windows/installers/`。
-- ZIP 运行检查：将发行 ZIP 完整解压到新目录，用其中的 `InterviewStudio.exe` 在隔离的全新数据目录中启动；确认没有预置 Key、简历或会话，演示问答、透明模式开关及合成 PDF/DOCX 简历解析均通过。
-- 打包范围：仅保留运行所需内容，项目根目录的文档、测试及开发辅助目录不进入应用包。
+- 完整源码测试：**142 项通过、0 项失败**；1 项 Mac 专项测试在 Windows 上跳过。
+- 页面布局：五个页面在 1000 × 700 和 1320 × 880 两种窗口尺寸下的 10 项布局检查通过；480 × 620 透明窗口中，三个滑块、输入框及操作按钮均可使用，控件没有相互遮挡。
+- `npm run make`：成功生成 1.5.1 EXE 与 ZIP，并收集到 `scripts/windows/installers/`。
+- 发行 ZIP：完整解压到新目录，使用其中的 `InterviewStudio.exe`，在启动前指定的隔离全新数据目录中运行；无预置 Key、简历或会话，演示问答、透明模式、合成 PDF/DOCX 简历解析检查通过。
+- 包内容：ASAR、ZIP 和 NUPKG 审查通过，包内界面文件与本次编译结果的摘要一致，仅包含运行所需依赖，没有工作区数据。本文 17 张使用截图已更新为 1.5.1 的软件窗口。
 
-这些结果验证了源码测试、构建和打包应用启动，**尚未执行 Setup 安装和 SmartScreen 首次安装检查**。真实麦克风、真实截图、多显示器与会议共享接收端效果仍需在实际环境中确认。附件与发布结果见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1)。
+**尚未实际重装 Setup，也未验证 SmartScreen 首次安装。** 构建和 ZIP 启动检查不能替代安装验证。真实麦克风、真实截图、多显示器与会议共享接收端效果仍需在实际环境中确认。
 
 安装包尚未配置商业代码签名，Windows 可能显示未知发布者；发布新版本需要重新提供安装包，当前未接入自动更新。
 

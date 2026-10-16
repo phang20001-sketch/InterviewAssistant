@@ -41,7 +41,9 @@ const sessions = computed(() => {
     <div class="page-heading">
       <div>
         <div class="eyebrow">YOUR GROWTH, ONE CONVERSATION AT A TIME</div>
-        <h1 id="history-title">每一次思考，都有迹可循<span class="heading-star">✳</span></h1>
+        <h1 id="history-title">
+          每一次思考，都有迹可循<AppIcon class="heading-star" name="message" />
+        </h1>
         <p>回看问题与回答，留住值得再次练习的思路。</p>
       </div>
       <div class="history-heading-actions">

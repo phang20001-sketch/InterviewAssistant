@@ -1,4 +1,5 @@
 <script setup>
+import appMark from '../../../../assets/icon.svg';
 import { useWorkspace } from '../../composables/useWorkspace.js';
 
 const { windowState, controlWindow } = useWorkspace();
@@ -6,7 +7,10 @@ const { windowState, controlWindow } = useWorkspace();
 
 <template>
   <header id="window-titlebar" class="window-titlebar" aria-label="窗口标题栏">
-    <span class="window-caption">面试工作台 · Interview Studio</span>
+    <span class="window-caption">
+      <img :src="appMark" alt="" />
+      面试工作台 · Interview Studio
+    </span>
     <div class="window-controls">
       <button
         id="window-minimize"

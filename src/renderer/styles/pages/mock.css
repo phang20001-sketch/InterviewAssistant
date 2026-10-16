@@ -6,17 +6,17 @@
   gap: 9px;
 }
 .mock-generation-actions label {
-  font-size: 10px;
-  color: #89977c;
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 .mock-generation-actions select {
-  min-height: 36px;
-  border: 1px solid #dfe5de;
-  border-radius: 6px;
-  background: #fff;
-  color: #5a6f49;
+  min-height: 39px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
   padding: 7px 9px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .mock-generation-guidance {
   margin-bottom: 14px;
@@ -30,37 +30,37 @@
   padding: 23px;
 }
 .mock-question-content h2 {
-  font-size: 18px;
-  font-weight: 500;
-  color: #546947;
-  line-height: 1.85;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.65;
   margin: 14px 0 9px;
   overflow-wrap: anywhere;
 }
 .mock-question-content > p {
-  font-size: 11px;
-  color: #8a9b7c;
-  line-height: 1.9;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
   margin-bottom: 24px;
 }
 .mock-question-content textarea {
   width: 100%;
   resize: vertical;
   min-height: 220px;
-  border: 1px solid #e7ecdf;
-  border-radius: 7px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 12px;
-  color: #697b59;
-  background: #fcfdf9;
-  font-size: 12px;
-  line-height: 1.9;
+  color: var(--ink);
+  background: var(--surface-soft);
+  font-size: 13px;
+  line-height: 1.75;
 }
 .mock-question-content textarea::placeholder {
-  color: #a4b095;
+  color: var(--text-secondary);
 }
 .mock-question-content textarea:disabled {
   opacity: 1;
-  background: #f5f7f1;
+  background: var(--surface-hover);
 }
 .mock-question-empty {
   padding: 28px 20px;
@@ -74,9 +74,9 @@
   gap: 10px;
 }
 .mock-actions > span {
-  font-size: 10px;
-  color: #8f9e80;
-  line-height: 1.8;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 .mock-feedback-card {
   min-height: 540px;
@@ -87,13 +87,13 @@
   overflow: auto;
 }
 .mock-session-note {
-  background: #f5f8ef;
-  border: 1px solid #e9eedf;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
   padding: 10px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  line-height: 1.9;
-  color: #7c8e68;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
   margin-bottom: 20px;
 }
 .mock-setup-note,
@@ -113,24 +113,24 @@
 .mock-session-summary {
   padding: 17px 20px;
   margin-bottom: 20px;
-  border: 1px solid #e5ebdc;
-  border-radius: 9px;
-  background: #fafcf6;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-soft);
 }
 .mock-session-summary.completed {
-  background: #f0f7e4;
-  border-color: #dbe8c9;
+  background: var(--success-soft);
+  border-color: #dce9e1;
 }
 .mock-session-summary strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  color: #526a3e;
+  color: var(--ink);
 }
 .mock-session-summary p {
   margin-top: 5px;
-  font-size: 10px;
-  line-height: 1.8;
-  color: #8c9c7b;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-secondary);
   overflow-wrap: anywhere;
 }
 .mock-average-score {
@@ -138,20 +138,20 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
-  font-size: 13px;
-  color: #506d35;
+  font-size: 14px;
+  color: var(--ink);
   white-space: nowrap;
 }
 .mock-average-score small {
-  color: #8c9c7b;
-  font-size: 9px;
+  color: var(--text-secondary);
+  font-size: 11px;
 }
 .mock-review-round {
   margin-bottom: 25px;
 }
 .mock-review-round + .mock-review-round {
   padding-top: 19px;
-  border-top: 1px solid #edf1e7;
+  border-top: 1px solid var(--border);
 }
 .mock-review-heading {
   display: flex;
@@ -162,46 +162,46 @@
 }
 .mock-review-score {
   padding: 4px 8px;
-  border-radius: 5px;
-  background: #edf5e2;
-  color: #567839;
-  font-size: 11px;
+  border-radius: 8px;
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
 .mock-review-score.unavailable {
-  background: #f7f1e7;
-  color: #a1845b;
+  background: var(--surface-hover);
+  color: var(--text-secondary);
 }
 .mock-review-question {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  color: #667e52;
-  line-height: 1.9;
+  color: var(--ink);
+  line-height: 1.7;
   margin: 10px 0;
   overflow-wrap: anywhere;
 }
 .mock-answer-label {
   margin: 16px 0 8px;
-  color: #8b9b7c;
-  font-size: 10px;
+  color: var(--ink);
+  font-size: 12px;
   font-weight: 600;
 }
 .mock-review-round .mock-session-note {
-  font-size: 10px;
+  font-size: 12px;
   margin: 13px 0;
   padding: 8px 10px;
 }
 .mock-raw-review {
   margin-top: 16px;
   padding-top: 10px;
-  border-top: 1px solid #edf1e7;
+  border-top: 1px solid var(--border);
 }
 .mock-raw-review summary {
   cursor: pointer;
-  color: #8a997c;
-  font-size: 10px;
-  line-height: 1.8;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.7;
 }
 .mock-raw-review .markdown-content {
   margin-top: 12px;
@@ -216,15 +216,15 @@
 .mock-question-source {
   margin: 0 0 20px;
   padding: 12px 16px;
-  border: 1px solid #e5ebdc;
-  border-radius: 8px;
-  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
 }
 .mock-question-source summary {
   cursor: pointer;
-  color: #829472;
-  font-size: 11px;
-  line-height: 1.9;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
 }
 .mock-question-source .markdown-content {
   margin-top: 14px;
@@ -234,7 +234,7 @@
 }
 .mock-generation-batch {
   padding: 12px 0;
-  border-top: 1px solid #edf1e7;
+  border-top: 1px solid var(--border);
 }
 .mock-generation-batch summary {
   overflow-wrap: anywhere;
@@ -242,8 +242,8 @@
 .mock-generation-batch time {
   display: block;
   margin-top: 3px;
-  color: #98a58c;
-  font-size: 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 .mock-preferences-list {
   margin: 0;
@@ -255,15 +255,15 @@
   grid-template-columns: minmax(86px, 120px) minmax(0, 1fr);
   align-items: start;
   gap: 12px;
-  line-height: 1.9;
-  font-size: 11px;
+  line-height: 1.7;
+  font-size: 13px;
 }
 .mock-preferences-list dt {
-  color: #8a997b;
+  color: var(--text-secondary);
 }
 .mock-preferences-list dd {
   margin: 0;
-  color: #5c724c;
+  color: var(--ink);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

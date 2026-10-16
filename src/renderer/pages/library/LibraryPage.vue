@@ -44,7 +44,7 @@ function batchLabel(batch) {
     <div class="page-heading">
       <div>
         <div class="eyebrow">QUESTIONS FROM YOUR EXPERIENCE</div>
-        <h1 id="library-title">练好属于你的问题<span class="heading-star">✳</span></h1>
+        <h1 id="library-title">练好属于你的问题<AppIcon class="heading-star" name="message" /></h1>
         <p>根据简历和已保存的面试偏好生成，所有题目持续累加保存在本地。</p>
       </div>
       <span class="large-counter">{{ allQuestions.length }} <small>道本地问题</small></span>

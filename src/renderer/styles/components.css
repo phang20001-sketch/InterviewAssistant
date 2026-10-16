@@ -3,51 +3,54 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  border: 1px solid #dfe5de;
-  border-radius: 6px;
+  border: 1px solid #dcdee2;
   background: #fff;
-  font-size: 11px;
   font-weight: 500;
-  padding: 9px 12px;
-  min-height: 36px;
   white-space: nowrap;
+  border-radius: 8px;
+  color: #464c57;
+  font-size: 12px;
+  padding: 9px 13px;
+  min-height: 37px;
+  box-shadow: 0 1px 2px #171b2305;
   transition:
     background 0.15s,
-    transform 0.15s;
+    border-color 0.15s;
 }
 .button:hover {
-  background: #f6f8f1;
+  background: var(--surface-hover);
+  border-color: #c7cbd2;
 }
 .button.primary {
-  background: var(--lime);
-  border-color: var(--lime);
-  color: #2c3b20;
-  font-weight: 600;
+  color: var(--on-primary);
+  background: var(--primary);
+  border-color: var(--primary);
+  font-weight: 550;
 }
 .button.primary:hover {
-  background: #c7e66b;
-  border-color: #c7e66b;
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 .button svg {
-  height: 14px;
-  width: 14px;
+  width: 15px;
+  height: 15px;
 }
 
 .card {
-  background: #fff;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 3px 7px #24341b02;
   overflow: hidden;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 5px #25283003;
 }
 .card-header {
-  height: 60px;
   padding: 0 21px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #edf0eb;
+  border-bottom: 1px solid var(--border);
   gap: 9px;
+  height: 58px;
 }
 .section-title {
   display: flex;
@@ -56,13 +59,13 @@
   min-width: 0;
 }
 .section-title h2 {
-  font-size: 12px;
   font-weight: 600;
-  color: #364039;
+  color: #343943;
   white-space: nowrap;
+  font-size: 13px;
 }
 .section-title > span[data-icon] {
-  color: #8b9b7f;
+  color: #798596;
 }
 .section-title svg {
   width: 16px;
@@ -72,59 +75,60 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #97b36b;
+  background: #7c8da2;
 }
 .subtle-tag {
-  font-size: 9px;
-  border: 1px solid #e9ece7;
-  border-radius: 4px;
-  padding: 2px 6px;
-  color: #98a08f;
+  border: 1px solid var(--border);
+  color: #626c79;
   white-space: nowrap;
+  font-size: 10px;
+  border-radius: 5px;
+  padding: 2px 7px;
+  background: #fafbfc;
 }
 
 .text-button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: #7c8c68;
-  font-size: 10px;
+  color: var(--accent);
   padding: 3px 0;
+  font-size: 12px;
 }
 .text-button:hover {
-  color: #4c6d30;
+  color: #2a405a;
 }
 .text-button svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 
 .icon-button {
-  width: 27px;
-  height: 27px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  color: #a1ad98;
+  color: #7e8795;
+  width: 29px;
+  height: 29px;
+  border-radius: 6px;
 }
 .icon-button:hover {
-  background: #f2f5ed;
-  color: #658147;
+  background: var(--surface-hover);
+  color: #3f4e61;
 }
 .icon-button svg {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
 }
 
 .button.small {
-  font-size: 9px;
-  min-height: 28px;
-  padding: 5px 9px;
+  font-size: 11px;
+  min-height: 30px;
+  padding: 5px 10px;
 }
 .button.small svg {
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
 }
 
 .simple-empty {
@@ -134,31 +138,32 @@
   justify-content: center;
   text-align: center;
   flex-direction: column;
-  color: #a1af93;
+  color: var(--muted);
   gap: 12px;
 }
 .simple-empty-icon {
   width: 59px;
   height: 59px;
-  border-radius: 16px;
-  background: #f0f5e8;
-  color: #a0b77e;
+  background: var(--accent-soft);
+  color: #7c8ea3;
   display: grid;
   place-items: center;
   margin-bottom: 7px;
+  border-radius: 17px;
+  border: 1px solid var(--accent-border);
 }
 .simple-empty-icon svg {
   width: 27px;
   height: 27px;
 }
 .simple-empty h3 {
-  font-weight: 500;
-  color: #7a8e66;
-  font-size: 14px;
+  color: #525c6b;
+  font-size: 15px;
+  font-weight: 550;
 }
 .simple-empty p {
-  font-size: 10px;
-  line-height: 2;
+  font-size: 12px;
+  line-height: 1.9;
 }
 .simple-empty > .button {
   margin-top: 9px;
@@ -177,21 +182,21 @@
   pointer-events: none;
 }
 .toast {
-  background: #233c2f;
-  color: #e7efd9;
-  border: 1px solid #4c6547;
-  border-radius: 8px;
-  padding: 11px 17px;
-  box-shadow: 0 5px 25px #11271c20;
-  font-size: 11px;
+  background: #292e37;
+  color: #f4f5f7;
+  border: 1px solid #464d59;
   line-height: 1.8;
   animation: toast-in 0.2s ease;
   pointer-events: auto;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 12px;
+  box-shadow: 0 8px 28px #171b2326;
 }
 .toast.error {
-  background: #fff8f4;
-  border-color: #eed8ca;
-  color: #a4765b;
+  background: #fff8f7;
+  border-color: #ead2d0;
+  color: #964d4d;
 }
 @keyframes toast-in {
   from {

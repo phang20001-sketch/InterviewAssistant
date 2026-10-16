@@ -2,13 +2,13 @@
 
 ## 下载
 
-当前应用版本为 **1.5.0**，发布包面向 **Windows x64**。打开 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1)，或按用途直接下载：
+当前应用版本为 **1.5.1**，发布包面向 **Windows x64**。打开 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.1-windows.1)，或按用途直接下载：
 
 | 文件                                                                                                                                                                  | 用途                             |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| [InterviewStudio-Setup-1.5.0.exe](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-Setup-1.5.0.exe)         | 常规安装，安装后从开始菜单启动。 |
-| [InterviewStudio-win32-x64-1.5.0.zip](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-win32-x64-1.5.0.zip) | 完整解压后运行的便携包。         |
-| [SHA256SUMS.txt](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/SHA256SUMS.txt)                                           | 对照下载文件的 SHA-256 摘要。    |
+| [InterviewStudio-Setup-1.5.1.exe](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.1-windows.1/InterviewStudio-Setup-1.5.1.exe)         | 常规安装，安装后从开始菜单启动。 |
+| [InterviewStudio-win32-x64-1.5.1.zip](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.1-windows.1/InterviewStudio-win32-x64-1.5.1.zip) | 完整解压后运行的便携包。         |
+| [SHA256SUMS.txt](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.1-windows.1/SHA256SUMS.txt)                                           | 对照下载文件的 SHA-256 摘要。    |
 
 直接使用应用**无需安装 Node.js，也不用运行 `.cmd` 脚本**。Release 页面中的“Source code”是源码，不能当作应用运行。安装包通过 Releases 分发，不放入 Git 源码仓库。
 
@@ -16,7 +16,7 @@
 
 ### EXE 安装包
 
-1. 下载 `InterviewStudio-Setup-1.5.0.exe`。
+1. 下载 `InterviewStudio-Setup-1.5.1.exe`。
 2. 如已运行旧版本，先关闭窗口退出应用；如果用了 `Ctrl + Shift + Space` 隐藏窗口，先恢复窗口再关闭。
 3. 双击安装包，完成后从开始菜单打开 Interview Studio。
 4. 进入“模型与设置”添加服务地址、模型名称和 API Key；也可先使用演示模式熟悉界面。
@@ -25,20 +25,22 @@
 
 ### ZIP 便携包
 
-1. 下载 `InterviewStudio-win32-x64-1.5.0.zip`。
+1. 下载 `InterviewStudio-win32-x64-1.5.1.zip`。
 2. 右键选择“全部解压”，选择独立文件夹并等待完整解压。
 3. 打开解压目录，双击 `InterviewStudio.exe`。
 4. 保留同目录的全部文件和文件夹，不要只复制 EXE，也不要直接在压缩包中运行。
 
-本次发布的应用版本仍为 1.5.0。新用户可直接使用 Setup 安装。已安装同版本、想使用本次构建的用户，建议先退出旧程序，再把 ZIP 完整解压到新目录，运行其中的新 EXE，软件会读取原有本地资料。不要混拷两次打包的文件，也不要依赖同版本安装包一定替换已有程序；请勿为了更换程序而删除数据目录。
+本次应用版本为 1.5.1，带来石墨灰侧栏、暖白工作区、钢蓝选中提示、黑灰主按钮、新图标与空状态插图，并提高文字可读性。
+
+已安装 1.5.0 的用户可先退出旧程序，再运行 1.5.1 Setup 升级；安装版与便携版继续读取同一 Windows 用户的本地资料。若同版本重装未替换程序，可把 ZIP 完整解压到新目录后启动。不要混拷不同构建的文件，也不要为更换程序删除数据目录。Setup 的实际安装验证范围见下文。
 
 ## 校验下载文件
 
 将安装包、ZIP 和 `SHA256SUMS.txt` 下载到同一个文件夹，在该文件夹打开 PowerShell：
 
 ```powershell
-Get-FileHash -Algorithm SHA256 -LiteralPath .\InterviewStudio-Setup-1.5.0.exe
-Get-FileHash -Algorithm SHA256 -LiteralPath .\InterviewStudio-win32-x64-1.5.0.zip
+Get-FileHash -Algorithm SHA256 -LiteralPath .\InterviewStudio-Setup-1.5.1.exe
+Get-FileHash -Algorithm SHA256 -LiteralPath .\InterviewStudio-win32-x64-1.5.1.zip
 Get-Content -LiteralPath .\SHA256SUMS.txt
 ```
 
@@ -60,14 +62,15 @@ Get-Content -LiteralPath .\SHA256SUMS.txt
 
 ## 验证范围
 
-本次发布在 Windows 10 x64 上完成以下检查，详情见对应 [Release 说明](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1)：
+本次 **Windows 1.5.1** 已完成以下检查，详情见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.1-windows.1)：
 
-- 源码测试 **142 项通过、0 项失败**；1 项 Mac 专项测试在 Windows 上跳过。
-- `npm run make` 成功生成 EXE 与 ZIP，并收集到 `scripts/windows/installers/`。
-- 发行 ZIP 完整解压到新目录后，使用其中的 `InterviewStudio.exe` 在隔离的全新数据目录中启动；确认没有预置 Key、简历和会话，演示问答、透明模式开关、合成 PDF/DOCX 简历解析均通过。
-- 打包白名单仅保留运行所需内容，项目根目录的文档、测试与开发辅助目录不进入应用包。
+- 完整源码测试：**142 项通过、0 项失败**；1 项 Mac 专项测试在 Windows 上跳过。
+- 页面布局：五个页面在 1000 × 700 和 1320 × 880 两种窗口尺寸下的 10 项布局检查通过；480 × 620 透明窗口中，三个滑块、输入框及操作按钮均可使用，控件没有相互遮挡。
+- `npm run make`：成功生成 1.5.1 EXE 与 ZIP，并收集到 `scripts/windows/installers/`。
+- 发行 ZIP：完整解压到新目录，使用其中的 `InterviewStudio.exe`，在启动前指定的隔离全新数据目录中运行；无预置 Key、简历或会话，演示问答、透明模式、合成 PDF/DOCX 简历解析检查通过。
+- 包内容：ASAR、ZIP 和 NUPKG 审查通过，包内界面文件与本次编译结果的摘要一致，仅包含运行所需依赖，没有工作区数据。主使用文档的 17 张截图已更新为 1.5.1 的软件窗口。
 
-自动化桌面用例使用隔离数据和本地模拟接口，不调用真实付费模型；截图用例不读取用户桌面。**本次尚未执行 Setup 安装或 SmartScreen 首次安装检查**，打包成功与应用启动通过不能替代安装验证。
+自动化桌面用例使用隔离数据和本地模拟接口，不调用真实付费模型；文档只截取软件窗口，使用示例资料。**尚未实际重装 Setup，也未验证 SmartScreen 首次安装**，打包成功与 ZIP 启动检查不能替代安装验证。
 
 实际麦克风、真实截图、多显示器和会议共享接收端的显示效果仍需在使用环境中确认。透明模式与系统内容保护不能保证在所有共享软件中隐藏窗口。
 
@@ -86,10 +89,10 @@ npm run make
 - `start.cmd`：编译界面并启动开发应用。
 - `build.cmd`：运行 `npm run make`，生成 Windows 安装包和 ZIP。
 
-构建产物按 `package.json` 中的版本写入 `out/<版本>/`。对于 1.5.0：
+构建产物按 `package.json` 中的版本写入 `out/<版本>/`。对于 1.5.1：
 
-- EXE：`out/1.5.0/make/squirrel.windows/x64/InterviewStudio-Setup.exe`。
-- ZIP：`out/1.5.0/make/zip/win32/x64/` 下的 ZIP。
+- EXE：`out/1.5.1/make/squirrel.windows/x64/InterviewStudio-Setup.exe`。
+- ZIP：`out/1.5.1/make/zip/win32/x64/` 下的 ZIP。
 
 构建完成后，收集脚本还会把分发包复制到本目录的 `installers/`。Release 中的 EXE 添加了版本号，便于识别下载文件；源码仓库只保留脚本，不提交生成的安装包。克隆源码后没有本地安装包属于正常情况。
 

@@ -6,209 +6,208 @@
   width: 224px;
   min-width: 224px;
   background: var(--sidebar);
-  color: #b7c1bb;
+  color: var(--sidebar-text);
   display: flex;
   flex-direction: column;
   position: fixed;
   inset: 0 auto 0 0;
-  padding: 32px 18px 0;
   z-index: 4;
+  padding: 26px 14px 0;
+  border-right: 1px solid #2a2d33;
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
-  padding: 0 8px;
-  color: #fff;
+  color: #f4f5f7;
+  padding: 0 9px;
 }
 .brand-symbol {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 33px;
-  height: 37px;
-  gap: 4px;
-  transform: rotate(-14deg);
-}
-.brand-symbol span {
-  width: 6px;
-  border-radius: 2px;
-  background: var(--lime);
-  height: 26px;
-}
-.brand-symbol span:nth-child(2) {
-  height: 35px;
-}
-.brand-symbol span:nth-child(3) {
-  height: 20px;
+  display: block;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
 }
 .brand-copy {
-  font-size: 19px;
-  font-weight: 650;
-  letter-spacing: 0.4px;
   line-height: 1.4;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
 .brand-copy small {
   display: block;
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: #93a198;
-  font-weight: 500;
-  margin-top: 3px;
+  color: var(--sidebar-muted);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  font-weight: 400;
+  margin-top: 4px;
 }
 .workspace-badge {
-  margin: 31px 0 30px;
-  border: 1px solid #405046;
+  border: 1px solid #363941;
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 11px;
-  border-radius: 9px;
-  color: #e4eae5;
+  color: #e1e3e8;
   font-size: 12px;
+  margin: 26px 0 25px;
+  background: #23262c;
+  border-radius: 10px;
 }
 .workspace-badge small {
   display: block;
-  color: #91a096;
-  font-size: 10px;
+  color: var(--sidebar-muted);
   margin-top: 2px;
+  font-size: 11px;
 }
 .workspace-avatar {
-  width: 29px;
-  height: 29px;
-  border-radius: 7px;
-  background: #43584b;
-  color: #e6eeda;
+  background: #363b45;
+  color: #f1f3f7;
   display: grid;
   place-items: center;
   font-size: 12px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #4a4f59;
+  border-radius: 8px;
 }
 .workspace-chevron {
   margin-left: auto;
-  color: #819085;
+  color: #a3a8b2;
 }
 .nav-label {
-  font-size: 9px;
-  color: #7b8e80;
-  letter-spacing: 1.7px;
-  font-weight: 600;
+  color: var(--sidebar-muted);
   margin: 0 13px 11px;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  font-weight: 500;
 }
 .nav-item {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 12px;
   text-align: left;
-  border-radius: 7px;
-  padding: 12px 13px;
   margin-bottom: 5px;
-  font-size: 12px;
-  color: #a5b3a9;
-  font-weight: 500;
+  color: #aeb3be;
   transition:
     background 0.15s,
     color 0.15s;
+  position: relative;
+  gap: 11px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 400;
 }
 .nav-item svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 .nav-item:hover {
-  color: #e6ecdf;
-  background: #ffffff08;
+  color: #f4f5f7;
+  background: #272a31;
 }
 .nav-item.active {
-  background: #d4f577;
-  color: #253728;
-  font-weight: 650;
+  background: #32363e;
+  color: #fff;
+  border-color: #424751;
+  font-weight: 550;
 }
 .nav-key {
-  font-size: 13px;
   margin-left: auto;
-  color: #4b613c;
+  color: #a9afb9;
+  font-size: 11px;
 }
 .nav-tag {
-  font-size: 9px;
-  border: 1px solid #57694b;
+  border: 1px solid #464b55;
   border-radius: 4px;
   padding: 0 5px;
   margin-left: auto;
-  color: #b4cb95;
+  color: #bcc7d4;
+  font-size: 10px;
 }
 .nav-count {
   margin-left: auto;
   font-size: 10px;
-  background: #ffffff0b;
-  border-radius: 4px;
+  background: #ffffff0d;
   padding: 0 6px;
+  color: #d5d8df;
+  border-radius: 5px;
 }
 .sidebar-divider {
   margin: 20px 12px 14px;
   height: 1px;
-  background: #ffffff12;
+  background: #34373e;
 }
 .sidebar-spacer {
   flex: 1;
-  min-height: 60px;
+  min-height: 48px;
 }
 .practice-card {
-  border: 1px solid #425143;
-  border-radius: 10px;
-  padding: 16px 14px;
-  margin-bottom: 20px;
-  background: linear-gradient(130deg, #2b3d2a, #1e3228);
+  border: 1px solid #3c414a;
+  background: linear-gradient(130deg, #2a2f39, #23262d);
+  border-radius: 11px;
+  padding: 17px 14px;
+  margin-bottom: 18px;
 }
 .practice-orbit {
-  display: block;
-  font-size: 35px;
   line-height: 1;
-  color: #d4f577;
-  margin-bottom: 15px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
+  border: 1px solid #4b5666;
+  background: #35404f;
+  color: #d3e0ee;
+  margin-bottom: 13px;
 }
 .practice-card strong {
-  font-size: 12px;
   font-weight: 550;
-  color: #e7ebdf;
+  color: #f0f1f4;
+  font-size: 13px;
 }
 .practice-card p {
-  font-size: 10px;
-  color: #92a18e;
-  line-height: 1.9;
-  margin-top: 6px;
+  color: #aab1be;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 7px;
 }
 .practice-card button {
-  margin-top: 15px;
-  padding: 8px 10px;
-  background: #cce7a1;
-  color: #283c29;
-  border-radius: 5px;
-  font-size: 11px;
+  background: #e7ebf0;
+  color: #303742;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  font-weight: 600;
+  margin-top: 16px;
+  padding: 9px 11px;
+  border: 1px solid #f4f5f7;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 550;
 }
 .sidebar-footer {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 9px;
-  color: #89998e;
-  padding: 16px 2px;
-  border-top: 1px solid #ffffff0e;
+  color: var(--sidebar-muted);
+  border-top: 1px solid #34373e;
+  gap: 7px;
+  font-size: 10px;
+  padding: 16px 4px;
 }
 .sidebar-footer > span:last-child {
   margin-left: auto;
-  color: #718679;
-  font-size: 9px;
+  color: #a5aab4;
+  font-size: 10px;
 }
 .status-dot {
   display: inline-block;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #83aa60;
+  background: #779d8c;
   flex-shrink: 0;
 }
 .main-panel {
@@ -217,127 +216,150 @@
   min-width: 0;
 }
 .topbar {
-  height: 69px;
-  background: #fff;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 34px;
   gap: 14px;
+  height: 64px;
+  background: #fbfbfa;
+  padding: 0 32px;
 }
 .breadcrumb {
-  font-size: 11px;
-  color: #8c938e;
+  color: var(--muted);
   display: flex;
   gap: 12px;
   align-items: center;
+  font-size: 12px;
 }
 .breadcrumb span {
-  color: #d6dcd7;
+  color: #b7bbc2;
 }
 .breadcrumb strong {
-  font-size: 11px;
-  color: #4e5751;
+  color: var(--ink);
   font-weight: 500;
+  font-size: 12px;
 }
 .topbar-right {
   display: flex;
-  gap: 22px;
   align-items: center;
+  gap: 12px;
 }
 .private-label {
-  font-size: 10px;
-  color: #949c96;
+  color: var(--muted);
   display: flex;
   align-items: center;
   gap: 6px;
+  font-size: 11px;
+  margin-left: 4px;
 }
 .private-label svg {
   width: 13px;
   height: 13px;
+  color: var(--success);
 }
 .profile-avatar {
   display: grid;
   place-items: center;
-  font-size: 10px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #edf0e7;
-  color: #68745e;
-  border: 3px solid #f8f9f6;
+  background: #e8ebef;
+  color: #596170;
+  font-size: 11px;
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
+  border: 1px solid #dfe3e8;
+  margin-left: 4px;
 }
 .page-scroll {
-  padding: 32px 34px 22px;
   max-width: 1760px;
   margin: auto;
+  padding: 31px 32px 24px;
 }
 .page-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
+  gap: 18px;
+  margin-bottom: 24px;
 }
 .eyebrow {
-  font-size: 8px;
-  letter-spacing: 1.5px;
-  color: #8b968b;
-  font-weight: 600;
+  color: var(--muted);
   margin-bottom: 8px;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  font-weight: 500;
 }
 h1 {
-  font-size: 25px;
   line-height: 1.4;
   font-weight: 600;
-  letter-spacing: -0.8px;
-  color: #28362e;
+  color: var(--ink);
+  font-size: 26px;
+  letter-spacing: -0.7px;
 }
 .heading-star {
-  font-family: Georgia, serif;
   display: inline-block;
-  color: #a5bb6d;
-  font-size: 34px;
-  font-weight: 400;
+  color: #8b9caf;
   vertical-align: -3px;
-  margin-left: 12px;
+  width: 23px;
+  height: 23px;
+  margin-left: 9px;
 }
 .page-heading p {
-  color: #909791;
-  font-size: 11px;
-  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-top: 9px;
 }
 .heading-actions {
   display: flex;
-  gap: 8px;
   flex-shrink: 0;
+  gap: 9px;
 }
 
 .startup-error {
   display: flex;
   align-items: center;
   gap: 17px;
-  background: #fff4eb;
-  border: 1px solid #ead9c8;
-  border-radius: 8px;
+  background: var(--danger-soft);
+  border: 1px solid #ead2d0;
   padding: 18px;
   margin-bottom: 20px;
-  color: #a1825f;
+  color: #964d4d;
+  border-radius: 10px;
 }
 .startup-error > span svg {
   height: 25px;
   width: 25px;
 }
 .startup-error strong {
-  font-size: 12px;
   font-weight: 500;
+  font-size: 13px;
 }
 .startup-error p {
-  font-size: 10px;
-  color: #b69c80;
+  color: #8b6060;
   margin-top: 4px;
+  font-size: 12px;
 }
 .startup-error > .button {
   margin-left: auto;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 13px;
+  bottom: 13px;
+  width: 2px;
+  border-radius: 2px;
+  background: #b8c9db;
+}
+.practice-orbit svg {
+  width: 16px;
+  height: 16px;
+}
+.practice-card button:hover {
+  background: #fff;
+}
+.heading-star svg {
+  width: 23px;
+  height: 23px;
 }

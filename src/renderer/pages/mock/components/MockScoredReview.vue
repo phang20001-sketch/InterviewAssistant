@@ -21,7 +21,7 @@ const hasSeparateRaw = computed(() =>
   <article class="mock-review-round mock-scored-review" :data-question-id="review.questionId">
     <div class="mock-review-heading">
       <div class="message-meta">
-        <span class="message-avatar">✳</span>
+        <span class="message-avatar">AI</span>
         <strong>第 {{ round }} 题 · 点评</strong>
       </div>
       <span class="mock-review-score" :class="{ unavailable: score === null }">

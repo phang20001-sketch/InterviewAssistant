@@ -53,7 +53,9 @@ const {
     <div class="page-heading">
       <div>
         <div class="eyebrow">PRACTICE MAKES PROGRESS</div>
-        <h1 id="mock-title">结合简历和偏好，认真练一轮<span class="heading-star">✳</span></h1>
+        <h1 id="mock-title">
+          结合简历和偏好，认真练一轮<AppIcon class="heading-star" name="message" />
+        </h1>
         <p>AI 结合简历和面试偏好生成问题，逐题点评、打分；问题和整轮记录持续保存在本地。</p>
       </div>
       <div class="mock-generation-actions">

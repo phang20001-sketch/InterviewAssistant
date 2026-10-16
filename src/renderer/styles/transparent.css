@@ -141,7 +141,7 @@ body.transparent-mode::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgb(23 43 36 / var(--transparent-background-opacity, 0));
+  background: rgb(27 29 34 / var(--transparent-background-opacity, 0));
   pointer-events: none;
   z-index: 0;
 }

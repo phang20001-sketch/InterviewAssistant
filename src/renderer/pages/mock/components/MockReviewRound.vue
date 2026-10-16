@@ -16,7 +16,7 @@ const answerParts = computed(() => {
 <template>
   <article class="mock-review-round">
     <div class="message-meta">
-      <span class="message-avatar">{{ isUser ? '我' : '✳' }}</span>
+      <span class="message-avatar">{{ isUser ? '我' : 'AI' }}</span>
       <strong>第 {{ round }} 题 · {{ isUser ? '你的作答' : '练习点评' }}</strong>
       <span v-if="!isUser && message.demo" class="demo-message-label">本地示例 · 非真实评估</span>
     </div>

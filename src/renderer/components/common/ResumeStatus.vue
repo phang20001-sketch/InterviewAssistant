@@ -130,15 +130,15 @@ async function saveResume() {
 .resume-status {
   margin: 0 0 20px;
   padding: 16px 18px;
-  border: 1px solid #e2e8d9;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #f7faf2;
-  color: #6b7d5a;
+  background: var(--surface-soft);
+  color: var(--text-secondary);
 }
 
 .resume-status.resume-required {
-  background: #fffaf0;
-  border-color: #ecdfc2;
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
 }
 
 .resume-status-row,
@@ -167,14 +167,14 @@ async function saveResume() {
 }
 
 .resume-status-copy strong {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .resume-status-copy p,
 .resume-file-hint {
-  color: #8b987d;
-  font-size: 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
   line-height: 1.9;
 }
 
@@ -192,26 +192,26 @@ async function saveResume() {
 .resume-editor,
 .resume-preview {
   margin-top: 13px;
-  border-top: 1px solid #e1e8d8;
+  border-top: 1px solid var(--border);
   padding-top: 12px;
 }
 
 .resume-editor > label {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 7px;
 }
 
 .resume-editor textarea {
   width: 100%;
-  border: 1px solid #dfe6d5;
-  border-radius: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 10px 12px;
   min-height: 140px;
   resize: vertical;
   background: #fff;
-  color: #536749;
-  font-size: 11px;
+  color: var(--ink);
+  font-size: 13px;
   line-height: 1.9;
 }
 
@@ -219,8 +219,8 @@ async function saveResume() {
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 8px;
-  font-size: 9px;
-  color: #92a080;
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .resume-editor-footer > div {
@@ -229,7 +229,7 @@ async function saveResume() {
 
 .resume-preview summary {
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .resume-preview pre {
@@ -242,7 +242,7 @@ async function saveResume() {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.9;
 }
 

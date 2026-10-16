@@ -3,11 +3,11 @@
   background: transparent;
 }
 body {
-  background: #f7f8fa;
+  background: var(--canvas);
 }
 .app-shell {
   padding-top: 36px;
-  background: #f7f8fa;
+  background: var(--canvas);
 }
 .sidebar {
   top: 36px;
@@ -22,7 +22,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: #f0f1f3;
   border-bottom: 1px solid var(--border);
   z-index: 15;
   -webkit-app-region: drag;
@@ -30,11 +30,19 @@ body {
   user-select: none;
 }
 .window-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding-left: 16px;
-  color: #66756b;
+  color: #626873;
   font-size: 11px;
   letter-spacing: 0.2px;
   pointer-events: none;
+}
+.window-caption img {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
 }
 .window-controls {
   display: flex;
@@ -52,13 +60,13 @@ body {
     19px/1 'Segoe UI',
     sans-serif;
   border-radius: 0;
-  color: #68736c;
+  color: #69717e;
   -webkit-app-region: no-drag;
   app-region: no-drag;
 }
 .window-control:hover {
-  background: #edf1ec;
-  color: #263b2c;
+  background: #e1e4e9;
+  color: #303742;
 }
 .window-close:hover {
   background: #c54343;

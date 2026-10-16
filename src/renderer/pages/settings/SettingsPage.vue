@@ -30,7 +30,9 @@ const {
     <div class="page-heading">
       <div>
         <div class="eyebrow">MAKE IT YOUR OWN</div>
-        <h1 id="settings-title">配置你的专属面试助手<span class="heading-star">✳</span></h1>
+        <h1 id="settings-title">
+          配置你的专属面试助手<AppIcon class="heading-star" name="message" />
+        </h1>
         <p>管理常用模型，结合目标岗位和个人经历，定制你的面试练习。</p>
       </div>
       <button

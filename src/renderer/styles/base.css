@@ -1,25 +1,48 @@
 @charset "UTF-8";
 :root {
-  font-family: Inter, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-  color: #252b29;
-  background: #f7f8fa;
+  font-family: 'Segoe UI Variable', Inter, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  color: var(--ink);
+  background: var(--canvas);
   font-synthesis: none;
-  --lime: #d4f577;
-  --ink: #172c25;
-  --muted: #8a918e;
-  --border: #e8ece9;
-  --sidebar: #172b24;
+  -webkit-font-smoothing: antialiased;
+  --canvas: #f6f6f4;
+  --ink: #252830;
+  --muted: #6b717b;
+  --text-secondary: #626873;
+  --border: #e5e6e8;
+  --sidebar: #1b1d22;
+  --sidebar-text: #d3d6dd;
+  --sidebar-muted: #969ba5;
   --surface: #fff;
-  --green: #344d3e;
-  --orange: #f1ac65;
+  --surface-soft: #f7f8fa;
+  --surface-hover: #f0f2f5;
+  --primary: #24272e;
+  --primary-hover: #373b43;
+  --on-primary: #fff;
+  --accent: #526a82;
+  --accent-soft: #eef2f6;
+  --accent-border: #d5dee8;
+  --success: #437665;
+  --success-soft: #eff5f1;
+  --danger: #b45353;
+  --danger-soft: #fbf1f0;
+  --lime: var(--accent);
+  --green: var(--success);
+  --orange: #a46d3e;
 }
 * {
   box-sizing: border-box;
 }
 body {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
+  scrollbar-color: #c5c8ce transparent;
+  scrollbar-width: thin;
+}
+::selection {
+  background: #dce5ee;
+  color: #252830;
 }
 button,
 input,
@@ -46,15 +69,15 @@ button:disabled {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #7eab3f;
+  outline: 2px solid #8297af;
   outline-offset: 3px;
 }
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #8dad56 !important;
-  box-shadow: 0 0 0 3px #d4f57735;
+  border-color: #8297af !important;
+  box-shadow: 0 0 0 3px #526a8214;
 }
 button svg,
 .svg-icon {

@@ -2,6 +2,7 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import AppIcon from '../../../components/common/AppIcon.vue';
 import MarkdownContent from '../../../components/common/MarkdownContent.vue';
+import WorkspaceIllustration from '../../../components/common/WorkspaceIllustration.vue';
 import { useWorkspace } from '../../../composables/useWorkspace.js';
 
 const {
@@ -53,7 +54,7 @@ watch(
   <section class="card answer-card">
     <div class="card-header">
       <div class="section-title">
-        <span class="ai-symbol" aria-hidden="true">✳</span>
+        <AppIcon class="ai-symbol" name="message" />
         <h2>回答与思路</h2>
         <span class="answer-mode-badge" id="answer-mode-badge">
           {{ isDemo ? '示例' : 'AI' }}
@@ -85,7 +86,7 @@ watch(
 
     <div ref="body" class="answer-body" id="answer-body">
       <div v-if="assistantLoading" class="answer-loading">
-        <span class="loading-spark">✳</span>
+        <AppIcon class="loading-spark" name="message" />
         <strong>{{ assistantLoading.title }}</strong>
         <p>{{ assistantLoading.description }}</p>
       </div>
@@ -98,7 +99,7 @@ watch(
         >
           <div class="message-meta">
             <span class="message-avatar">
-              {{ message.role === 'assistant' ? '✳' : '我' }}
+              {{ message.role === 'assistant' ? 'AI' : '我' }}
             </span>
             <strong>{{ message.role === 'assistant' ? '面试助手' : '你的问题' }}</strong>
             <span v-if="message.role === 'assistant' && message.demo" class="demo-message-label">
@@ -124,12 +125,7 @@ watch(
       </template>
 
       <div v-else class="answer-empty" id="answer-empty">
-        <div class="empty-art" aria-hidden="true">
-          <span class="empty-art-line line-one"></span>
-          <span class="empty-art-line line-two"></span>
-          <span class="empty-art-line line-three"></span>
-          <span class="empty-art-star">✳</span>
-        </div>
+        <WorkspaceIllustration />
         <h3>好答案，从一个好问题开始</h3>
         <p>
           在左侧输入问题，获取清晰的回答思路。<br />

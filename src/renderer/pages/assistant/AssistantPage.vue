@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { modifierLabel } from '../../services/platform.js';
 import AppIcon from '../../components/common/AppIcon.vue';
 import ResumeStatus from '../../components/common/ResumeStatus.vue';
 import { useWorkspace } from '../../composables/useWorkspace.js';
@@ -24,10 +25,10 @@ const modelName = computed(() =>
   >
     <div class="page-heading">
       <div>
-        <div class="eyebrow">YOUR NEXT OPPORTUNITY STARTS HERE</div>
+        <div class="eyebrow">INTERVIEW WORKSPACE</div>
         <h1 id="assistant-title">
           从容面对，每一个问题
-          <span class="heading-star">✳</span>
+          <AppIcon class="heading-star" name="message" />
         </h1>
         <p>理清思路，组织答案，把最好的自己表达出来。</p>
       </div>
@@ -71,13 +72,13 @@ const modelName = computed(() =>
     <div class="workspace-bottom">
       <span>
         <AppIcon name="keyboard" />
-        <kbd>Ctrl Shift Enter</kbd>
+        <kbd>{{ modifierLabel }} Shift Enter</kbd>
         回答
         <span class="shortcut-separator">·</span>
-        <kbd>Ctrl Shift H</kbd>
+        <kbd>{{ modifierLabel }} Shift H</kbd>
         截图
         <span class="shortcut-separator">·</span>
-        <kbd>Ctrl Shift N</kbd>
+        <kbd>{{ modifierLabel }} Shift N</kbd>
         新会话
       </span>
       <span>每一步准备，都算数。</span>

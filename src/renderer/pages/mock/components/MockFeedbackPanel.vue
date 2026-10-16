@@ -46,7 +46,7 @@ watch(
   <section class="card mock-feedback-card">
     <div class="card-header">
       <div class="section-title">
-        <span class="ai-symbol">✳</span>
+        <AppIcon class="ai-symbol" name="message" />
         <h2>点评与评分</h2>
       </div>
       <button
@@ -80,7 +80,7 @@ watch(
       </template>
 
       <div v-if="submitting" class="answer-loading">
-        <span class="loading-spark">✳</span><strong>正在点评并评分</strong>
+        <AppIcon class="loading-spark" name="message" /><strong>正在点评并评分</strong>
         <p>AI 正在结合本场简历、面试偏好和你的回答分析，完成后自动保存。</p>
       </div>
       <div v-else-if="!reviews.length && !messages.length" class="simple-empty">

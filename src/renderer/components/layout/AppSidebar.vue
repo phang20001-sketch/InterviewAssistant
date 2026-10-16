@@ -1,4 +1,5 @@
 <script setup>
+import appMark from '../../../../assets/icon.svg';
 import { computed } from 'vue';
 import { useWorkspace } from '../../composables/useWorkspace.js';
 import AppIcon from '../common/AppIcon.vue';
@@ -26,7 +27,7 @@ const version = computed(() => state.value?.appInfo?.version || '1.0.0');
       aria-label="面试工作台首页"
       @click.prevent="navigate('assistant')"
     >
-      <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
+      <img class="brand-symbol" :src="appMark" alt="" />
       <span class="brand-copy">面试工作台<small>INTERVIEW STUDIO</small></span>
     </a>
     <div class="workspace-badge">
@@ -47,7 +48,7 @@ const version = computed(() => state.value?.appInfo?.version || '1.0.0');
       >
         <AppIcon :name="section.icon" />
         <span>{{ section.name }}</span>
-        <span v-if="section.view === 'assistant'" class="nav-key">⌘</span>
+        <span v-if="section.view === 'assistant'" class="nav-key">AI</span>
         <span v-else-if="section.view === 'mock'" class="nav-tag">练习</span>
         <span v-else-if="section.view === 'history'" id="history-count" class="nav-count">
           {{ historyCount }}
@@ -67,7 +68,7 @@ const version = computed(() => state.value?.appInfo?.version || '1.0.0');
     </button>
     <div class="sidebar-spacer"></div>
     <div class="practice-card">
-      <span class="practice-orbit" aria-hidden="true">✳</span>
+      <span class="practice-orbit" aria-hidden="true"><AppIcon name="message" /></span>
       <strong>准备充分，自在表达。</strong>
       <p>让每一次练习，都离理想机会更近。</p>
       <button id="sidebar-practice" :disabled="isBusy" @click="navigate('mock')">
