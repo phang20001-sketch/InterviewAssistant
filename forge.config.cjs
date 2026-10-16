@@ -18,9 +18,10 @@ module.exports = {
     executableName: 'InterviewStudio',
     appBundleId: 'com.interviewstudio.desktop',
     appCopyright: 'Copyright © 2026 Interview Studio',
+    extraResource: [path.join(__dirname, 'LICENSE')],
     ignore: [
-      // Only ship runtime files; .gitignore does not control package contents.
-      /^\/(?!(?:package\.json|src|dist|assets|node_modules)(?:\/|$))/,
+      // Only ship runtime files and the license; .gitignore does not control package contents.
+      /^\/(?!(?:LICENSE|package\.json|src|dist|assets|node_modules)(?:\/|$))/,
       /^\/src\/renderer(?:\/|$)/,
       /\.cmd$/,
     ],

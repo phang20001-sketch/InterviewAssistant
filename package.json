@@ -5,7 +5,7 @@
   "description": "A local-first desktop interview workspace with AI answers, screenshots and practice records.",
   "main": "src/main.cjs",
   "author": "Interview Studio",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "config": {
     "forge": "./forge.config.cjs"
