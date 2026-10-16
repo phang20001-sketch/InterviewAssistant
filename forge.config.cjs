@@ -19,15 +19,9 @@ module.exports = {
     appBundleId: 'com.interviewstudio.desktop',
     appCopyright: 'Copyright © 2026 Interview Studio',
     ignore: [
-      /^\/out(?:\/|$)/,
-      /^\/work(?:\/|$)/,
-      /^\/tests(?:\/|$)/,
-      /^\/\.tools(?:\/|$)/,
-      /^\/scripts(?:\/|$)/,
-      /^\/\.git(?:\/|$)/,
-      /^\/outputs(?:\/|$)/,
+      // Only ship runtime files; .gitignore does not control package contents.
+      /^\/(?!(?:package\.json|src|dist|assets|node_modules)(?:\/|$))/,
       /^\/src\/renderer(?:\/|$)/,
-      /^\/vite\.config\.mjs$/,
       /\.cmd$/,
     ],
     win32metadata: {

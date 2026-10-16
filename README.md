@@ -1,6 +1,6 @@
 # Interview Studio · 面试工作台
 
-Interview Studio 是一个用 Electron + Vue 3 开发的面试练习工具，支持文字问答、截图作答、语音转写、简历模拟面试和题库练习。支持 Windows 和 macOS，目前提供 Mac Apple 芯片版下载。
+Interview Studio 是一个用 Electron + Vue 3 开发的面试练习工具，支持文字问答、截图作答、语音转写、简历模拟面试和题库练习。支持 Windows 和 macOS，提供 Windows x64 与 Mac Apple 芯片版下载。
 
 应用无需注册。你可以先用演示模式熟悉界面，再接入自己的 AI 服务。简历、设置和练习记录保存在本机。
 
@@ -35,12 +35,29 @@ _主界面：左侧切换面试助手、模拟面试、题库练习、面试记�
 
 **只使用软件，无需安装 Node.js，也不用运行开发脚本。**
 
-1. [直接下载 Mac Apple 芯片版 ZIP](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-macos.1/Interview.Studio-darwin-arm64-1.5.0.zip)，或打开 [Releases 发布页面](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1)，在 Assets 中下载应用包。
-2. Apple 芯片的 Mac 双击解压 `darwin-arm64` ZIP。
-3. 将 `Interview Studio.app` 拖入“应用程序”，从那里双击打开。
-4. 按系统提示授予麦克风、屏幕录制权限，然后在“模型与设置”配置自己的 AI 服务。也可以先使用演示模式。
+| 系统           | 下载                                                                                                                                                                                                                                                                                    | 安装方式                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Windows x64    | [EXE 安装包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-Setup-1.5.0.exe) / [ZIP 便携包](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-windows.1/InterviewStudio-win32-x64-1.5.0.zip) | EXE 安装后从开始菜单打开；ZIP 完整解压后运行 `InterviewStudio.exe`。 |
+| Mac Apple 芯片 | [应用 ZIP](https://github.com/phang20001-sketch/InterviewAssistant/releases/download/v1.5.0-macos.1/Interview.Studio-darwin-arm64-1.5.0.zip)                                                                                                                                            | 双击解压，将 `Interview Studio.app` 拖入“应用程序”后打开。           |
 
-当前下载包适用于 Apple 芯片 Mac。Intel Mac 暂无下载包；Windows 已保留开发和打包脚本，安装包后续提供。
+发布详情与附件见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1) 和 [Mac Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-macos.1)。请选择 Assets 中的应用包；“Source code”是源码，不能直接运行。Intel Mac 暂无下载包。
+
+### Windows 安装与更新
+
+1. 普通使用推荐下载 EXE，双击安装后从开始菜单打开 Interview Studio。
+2. 使用 ZIP 时，先右键“全部解压”，再运行解压目录中的 `InterviewStudio.exe`。不要直接在 ZIP 内运行，也不要只把 EXE 拷贝出来；同目录的其他文件也是运行必需的。
+3. 本次为 1.5.0 的 Windows 发布包。已安装同版本时，先关闭旧程序退出，再把本次 ZIP 完整解压到新目录，运行其中的新 EXE；软件会读取原有本地资料。不要混拷两次打包的文件，也不要依赖同版本安装包一定替换已有程序。隐藏过窗口时，先恢复窗口再关闭。
+4. 打开后在“模型与设置”配置自己的服务，或先使用演示模式。ZIP 版也把资料保存到当前用户的数据目录，不随解压目录自动迁移。
+
+当前应用未配置商业代码签名，Windows 可能提示未知发布者。请确认下载来自上述仓库的 Release，再按系统提供的提示处理；如果设备策略不允许打开，请联系设备管理员，不要关闭系统安全防护。
+
+Windows Release 附有 `SHA256SUMS.txt`，可用 PowerShell 的 `Get-FileHash` 校验下载文件，详细步骤见 [Windows 使用说明](scripts/windows/README.md)。
+
+### Mac 安装
+
+1. 下载 Apple 芯片版 `darwin-arm64` ZIP，双击解压。
+2. 将 `Interview Studio.app` 拖入“应用程序”，从那里双击打开。
+3. 按系统提示授予麦克风、屏幕录制权限，然后在“模型与设置”配置自己的 AI 服务。也可以先使用演示模式。
 
 ### Mac 首次打开与权限
 
@@ -456,6 +473,17 @@ npm run make -- --platform=darwin --arch=x64
 
 桌面回归测试会打开真实窗口，截图业务用例使用本地合成图片，不读取用户桌面；纯业务测试不需要真实模型账号。Mac 的麦克风授权、系统截图和多显示器表现还应进行人工验证。
 
+### 本次 Windows 发布验证
+
+本次 Windows x64 包在 Windows 10 x64 上构建和检查：
+
+- 源码测试：**142 项通过、0 项失败**；1 项 Mac 专项测试在 Windows 上跳过。
+- `npm run make`：成功生成 EXE 与 ZIP，并收集到 `scripts/windows/installers/`。
+- ZIP 运行检查：将发行 ZIP 完整解压到新目录，用其中的 `InterviewStudio.exe` 在隔离的全新数据目录中启动；确认没有预置 Key、简历或会话，演示问答、透明模式开关及合成 PDF/DOCX 简历解析均通过。
+- 打包范围：仅保留运行所需内容，项目根目录的文档、测试及开发辅助目录不进入应用包。
+
+这些结果验证了源码测试、构建和打包应用启动，**尚未执行 Setup 安装和 SmartScreen 首次安装检查**。真实麦克风、真实截图、多显示器与会议共享接收端效果仍需在实际环境中确认。附件与发布结果见 [Windows Release](https://github.com/phang20001-sketch/InterviewAssistant/releases/tag/v1.5.0-windows.1)。
+
 安装包尚未配置商业代码签名，Windows 可能显示未知发布者；发布新版本需要重新提供安装包，当前未接入自动更新。
 
 ## 上传 GitHub 时提交哪些文件
@@ -504,4 +532,4 @@ macOS: ~/Library/Application Support/Interview Studio/workspace.json
 
 如需完整本地备份，先退出应用，再复制数据目录中的 `workspace.json` 到自己保管的位置。它包含私密简历与聊天内容，请不要提交到 GitHub。系统加密的 Key 可能受当前用户、设备或钥匙串绑定限制，迁移到其他电脑后可能需要重新填写 Key。会话 Markdown 导出便于阅读，但不能替代完整数据备份。
 
-使用真实 AI 服务时，应用会把本次请求所需的内容发送给你配置的服务。离线时仍可查看已保存的记录和题库。
+**无需登录，所有配置与使用记录保存在本地。** 使用真实 AI 时，本次请求所需的文字、简历、面试偏好、截图或音频仍会发送给你自行配置的模型或转写服务。本地保存不等于所有内容都不会离开设备，也不等于完全离线；离线时仍可查看已保存的记录和题库。
