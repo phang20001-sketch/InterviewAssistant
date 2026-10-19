@@ -11,6 +11,7 @@ export function useShortcuts(workspace) {
     navigate,
     askQuestion,
     captureAndAnswer,
+    clearCurrentChat,
     chooseScreens,
     newSession,
     toggleTransparentMode,
@@ -19,6 +20,14 @@ export function useShortcuts(workspace) {
 
   function onKeydown(event) {
     const modifier = event.ctrlKey || event.metaKey;
+    const key = event.key.toLowerCase();
+    if (modifier && !event.altKey && !event.shiftKey && (key === 'e' || key === 'r')) {
+      event.preventDefault();
+      if (event.repeat || isBusy.value || !state.value || event.isComposing) return;
+      if (key === 'e') captureAndAnswer();
+      else clearCurrentChat();
+      return;
+    }
     if (modifier && event.shiftKey && event.key.toLowerCase() === 't') {
       event.preventDefault();
       if (!event.repeat) toggleTransparentMode(true);
@@ -30,11 +39,6 @@ export function useShortcuts(workspace) {
       return;
     }
     if (event.repeat || isBusy.value || !state.value || event.isComposing) return;
-    if (modifier && event.altKey && !event.shiftKey && event.key === 'Enter') {
-      event.preventDefault();
-      captureAndAnswer();
-      return;
-    }
     if (modifier && !event.altKey && event.key === 'Enter') {
       event.preventDefault();
       if (currentView.value === 'mock') mockSubmit.value?.();
@@ -55,6 +59,7 @@ export function useShortcuts(workspace) {
       chooseScreens();
     }
     if (type === 'capture-answer') captureAndAnswer();
+    if (type === 'clear-current-chat') clearCurrentChat();
     if (type === 'ask') {
       navigate('assistant');
       askQuestion();

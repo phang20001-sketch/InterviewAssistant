@@ -75,11 +75,11 @@ const modelName = computed(() =>
         <kbd>{{ modifierLabel }} Shift Enter</kbd>
         回答
         <span class="shortcut-separator">·</span>
-        <kbd>{{ modifierLabel }} Shift H</kbd>
-        截图
+        <kbd>{{ modifierLabel }} E</kbd>
+        截屏作答
         <span class="shortcut-separator">·</span>
-        <kbd>{{ modifierLabel }} Shift N</kbd>
-        新会话
+        <kbd>{{ modifierLabel }} R</kbd>
+        清空聊天
       </span>
       <span>每一步准备，都算数。</span>
     </div>

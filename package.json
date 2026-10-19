@@ -1,7 +1,7 @@
 {
   "name": "interview-studio",
   "productName": "Interview Studio",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "A local-first desktop interview workspace with AI answers, screenshots and practice records.",
   "main": "src/main.cjs",
   "author": "Interview Studio",

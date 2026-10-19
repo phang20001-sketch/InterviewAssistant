@@ -60,6 +60,23 @@ export function useSessions(workspace) {
     }, '删除会话失败。');
   }
 
+  async function clearCurrentChat() {
+    if (!state.value || workspace.isBusy.value) return;
+    if (recorder.isRecording.value) return toast('请先结束当前录音。');
+    const session = assistantSession.value;
+    if (!session) return toast('请先打开面试助手聊天；模拟面试记录不会通过此快捷键清除。');
+    await perform(async () => {
+      applyState(await desktop.clearCurrentSession(session.id));
+      question.value = '';
+      workspace.removeScreenshot();
+      workspace.setMode('text');
+      workspace.pendingSource.value = 'text';
+      workspace.screenPicker.open = false;
+      navigate('assistant');
+      toast('当前聊天已清空。');
+    }, '清空当前聊天失败，请重试。');
+  }
+
   async function clearAllSessions() {
     if (!state.value || workspace.isBusy.value || recorder.isRecording.value) return;
     const confirmed = window.confirm(
@@ -114,6 +131,7 @@ export function useSessions(workspace) {
     newSession,
     switchSession,
     deleteSession,
+    clearCurrentChat,
     clearAllSessions,
     exportSession,
     copyAnswer,

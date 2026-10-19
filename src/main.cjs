@@ -219,6 +219,18 @@ function registerHandlers() {
     store.deleteSession(id);
     return snapshot();
   });
+  handle('clear-current-session', (id) => {
+    if (id !== store.snapshot().activeSessionId) throw new Error('当前会话已切换，请重新清空。');
+    if (
+      inProgress.size ||
+      captureInProgress ||
+      connectionTestInProgress ||
+      transcriptionsInProgress
+    )
+      throw new Error('正在生成回答、截屏、转写或验证连接，请等待完成后再清空当前聊天。');
+    store.clearSession(id);
+    return snapshot();
+  });
   handle('clear-sessions', () => {
     if (inProgress.size || captureInProgress)
       throw new Error('正在生成回答或截屏，请等待完成后再清除会话。');
@@ -584,14 +596,15 @@ async function ready() {
   createWindow();
   for (const [accelerator, action] of [
     ['CommandOrControl+Shift+H', 'capture'],
-    ['CommandOrControl+Alt+Enter', 'capture-answer'],
+    ['CommandOrControl+E', 'capture-answer'],
+    ['CommandOrControl+R', 'clear-current-chat'],
     ['CommandOrControl+Shift+Enter', 'ask'],
     ['CommandOrControl+Shift+N', 'new-session'],
   ]) {
     globalShortcut.register(accelerator, () => {
       if (!mainWindow) return;
       if (action === 'ask' || action === 'capture-answer') mainWindow.showInactive();
-      else mainWindow.show();
+      else if (action !== 'clear-current-chat') mainWindow.show();
       mainWindow.webContents.send('studio:shortcut', { type: action });
     });
   }

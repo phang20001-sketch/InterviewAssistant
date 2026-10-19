@@ -30,6 +30,7 @@ export const desktop = {
   createSession: (options) => invoke('createSession', options),
   switchSession: (id) => invoke('switchSession', id),
   deleteSession: (id) => invoke('deleteSession', id),
+  clearCurrentSession: (id) => invoke('clearCurrentSession', id),
   clearSessions: () => invoke('clearSessions'),
   ask: (question) => invoke('ask', question),
   startPractice: (options) => invoke('startPractice', options),

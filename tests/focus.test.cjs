@@ -7,16 +7,37 @@ const { once } = require('node:events');
 const { setTimeout: delay } = require('node:timers/promises');
 const { _electron } = require('playwright');
 const { editActiveModel } = require('./helpers/model-manager.cjs');
+const { Store } = require('../src/store.cjs');
 
 const root = path.resolve(__dirname, '..');
 
 test(
-  'capture and background shortcuts preserve native focus while returning local model answers',
+  'capture and clear-chat shortcuts preserve native focus and unrelated local data',
   { timeout: 120000 },
   async (t) => {
     const work = path.join(root, 'work');
     await fs.mkdir(work, { recursive: true });
     const directory = await fs.mkdtemp(path.join(work, 'focus-test-'));
+    const fixtureStore = new Store(directory, {});
+    fixtureStore.saveSettings({ resume: 'FOCUS_TEST_RESUME' });
+    const generation = {
+      raw: 'FOCUS_TEST_SAVED_QUESTION',
+      model: 'focus-local-model',
+      questions: [
+        {
+          id: 'focus-test-question',
+          title: 'FOCUS_TEST_SAVED_QUESTION',
+          topic: 'JavaScript',
+          category: '技术',
+          level: '基础',
+          description: 'A local question that must survive clearing one chat.',
+          tags: ['focus-test'],
+        },
+      ],
+    };
+    fixtureStore.appendQuestionBatch(generation);
+    const mockSessionId = fixtureStore.createPractice(generation);
+    fixtureStore.createSession();
     const fixtureDirectory = path.join(directory, 'launcher');
     await fs.mkdir(fixtureDirectory);
     const metadata = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
@@ -40,10 +61,13 @@ test(
       ].join('\n'),
     );
     const requests = [];
+    let holdResponse = false;
+    let releaseResponse = null;
     const server = http.createServer(async (request, response) => {
       const chunks = [];
       for await (const chunk of request) chunks.push(chunk);
       requests.push(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+      if (holdResponse) await new Promise((resolve) => (releaseResponse = resolve));
       response.writeHead(200, { 'Content-Type': 'application/json' });
       response.end(JSON.stringify({ choices: [{ message: { content: '7. C' } }] }));
     });
@@ -51,6 +75,7 @@ test(
     await once(server, 'listening');
     let application;
     t.after(async () => {
+      releaseResponse?.();
       if (application) await application.close().catch(() => {});
       await new Promise((resolve) => server.close(resolve));
     });
@@ -73,12 +98,27 @@ test(
       const state = await window.desktop.bootstrap();
       return document.querySelector('#app-version')?.textContent === `v${state.appInfo.version}`;
     });
+    const registered = await application.evaluate(() => [...globalThis.__focusShortcuts.keys()]);
+    assert.ok(registered.includes('CommandOrControl+E'));
+    assert.ok(registered.includes('CommandOrControl+R'));
+    assert.equal(registered.includes('CommandOrControl+Alt+Enter'), false);
     await application.evaluate(async ({ BrowserWindow }) => {
       const workspace = BrowserWindow.getAllWindows()[0];
       if (!workspace.isVisible()) {
         await new Promise((resolve) => workspace.once('show', () => setImmediate(resolve)));
       }
+      workspace.focus();
     });
+    // Configure the local model before exercising native transparency and
+    // minimize transitions. Those transitions emit asynchronous window-state
+    // events that can otherwise dismiss a settings dialog while it is edited.
+    await editActiveModel(page, {
+      baseUrl: `http://127.0.0.1:${server.address().port}/v1`,
+      model: 'focus-local-model',
+      apiKey: 'focus-local-test-key',
+      demoMode: false,
+    });
+    await page.locator('[data-view="assistant"]').click();
 
     // Both the screen image and the competing window belong to this test. No
     // desktop content, browser profile, external model, or real API key is used.
@@ -266,13 +306,6 @@ test(
 
     await page.evaluate(() => window.desktop.setTransparentMode(false));
     await page.waitForFunction(() => !document.body.classList.contains('transparent-mode'));
-    await editActiveModel(page, {
-      baseUrl: `http://127.0.0.1:${server.address().port}/v1`,
-      model: 'focus-local-model',
-      apiKey: 'focus-local-test-key',
-      demoMode: false,
-    });
-    await page.locator('[data-view="assistant"]').click();
 
     const waitIdle = () =>
       page.waitForFunction(() => document.querySelector('#capture-answer')?.disabled === false);
@@ -323,7 +356,7 @@ test(
       const beforeRequests = requests.length;
       const beforeAnswers = (await storedAnswers()).length;
       await prepare({ focused: false, ...initial });
-      await trigger('CommandOrControl+Alt+Enter');
+      await trigger('CommandOrControl+E');
       await waitForAnswer(beforeAnswers + 1);
       const captured = await assertBackground();
       assert.equal(requests.length, beforeRequests + 1);
@@ -349,9 +382,8 @@ test(
       input.dispatchEvent(new Event('input', { bubbles: true }));
       document.dispatchEvent(
         new KeyboardEvent('keydown', {
-          key: 'Enter',
+          key: 'e',
           ctrlKey: true,
-          altKey: true,
           bubbles: true,
           cancelable: true,
         }),
@@ -370,5 +402,136 @@ test(
     const fallback = await waitForFocus('workspace');
     assert.deepEqual(fallback.calls, ['show']);
     assert.deepEqual(fallback.captures, [{ visible: false, focused: false }]);
+
+    // Keep the existing conversation as a control while clearing a second one.
+    await page.locator('#new-session').click();
+    const oldAnswers = (await storedAnswers()).length;
+    await page.locator('#question-input').fill('FOCUS_TEST_CHAT_TO_CLEAR');
+    await prepare({ focused: false });
+    await trigger('CommandOrControl+Shift+Enter');
+    await waitForAnswer(oldAnswers + 1);
+    const clearTarget = await page.evaluate(() => window.desktop.bootstrap());
+    const clearSessionId = clearTarget.activeSessionId;
+    const unchangedSessions = clearTarget.sessions.filter(
+      (session) => session.id !== clearSessionId,
+    );
+    assert.ok(unchangedSessions.some((session) => session.messages.length > 0));
+    assert.ok(unchangedSessions.some((session) => session.id === mockSessionId));
+
+    await page.locator('[data-mode="screenshot"]').click();
+    await page.locator('#pick-screen').click();
+    await page.locator('.screen-option').first().click();
+    await page.waitForFunction(() => !document.querySelector('#image-preview').hidden);
+    await page.evaluate(() => {
+      window.__clearChatConfirmCalls = 0;
+      window.confirm = () => {
+        window.__clearChatConfirmCalls++;
+        return false;
+      };
+      const input = document.querySelector('#question-input');
+      input.value = 'FOCUS_TEST_DRAFT_TO_CLEAR';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await page.evaluate(() => window.desktop.setTransparentMode(true));
+    await page.waitForFunction(() => document.body.classList.contains('transparent-mode'));
+    await prepare({ focused: false, visible: false });
+    const beforeClearRequests = requests.length;
+    await trigger('CommandOrControl+R');
+    await page.waitForFunction(async (id) => {
+      const state = await window.desktop.bootstrap();
+      return state.sessions.find((session) => session.id === id)?.messages.length === 0;
+    }, clearSessionId);
+    await waitIdle();
+    await assertBackground({ visible: false });
+    assert.deepEqual((await nativeState()).calls, []);
+    assert.equal(requests.length, beforeClearRequests);
+    assert.equal(await page.locator('#question-input').inputValue(), '');
+    assert.equal(await page.locator('#image-preview').evaluate((element) => element.hidden), true);
+    assert.equal(await page.evaluate(() => window.__clearChatConfirmCalls), 0);
+    const cleared = await page.evaluate(() => window.desktop.bootstrap());
+    assert.equal(cleared.activeSessionId, clearSessionId);
+    assert.deepEqual(
+      cleared.sessions.filter((session) => session.id !== clearSessionId),
+      unchangedSessions,
+    );
+    assert.deepEqual(cleared.settings, clearTarget.settings);
+    assert.deepEqual(cleared.modelProfiles, clearTarget.modelProfiles);
+    assert.deepEqual(cleared.questionBatches, clearTarget.questionBatches);
+    const saved = JSON.parse(await fs.readFile(path.join(directory, 'workspace.json'), 'utf8'));
+    assert.equal(saved.activeSessionId, clearSessionId);
+    assert.deepEqual(saved.sessions.find((session) => session.id === clearSessionId).messages, []);
+    assert.deepEqual(
+      saved.sessions.filter((session) => session.id !== clearSessionId),
+      unchangedSessions,
+    );
+    assert.equal(saved.settings.resume, 'FOCUS_TEST_RESUME');
+    assert.equal(saved.questionBatches.length, 1);
+
+    // Repeat and composition events must not discard a user's unsent draft.
+    await page.evaluate(() => window.desktop.setTransparentMode(false));
+    await page.waitForFunction(() => !document.body.classList.contains('transparent-mode'));
+    await prepare({ focused: true });
+    await page.locator('#question-input').fill('FOCUS_TEST_PROTECTED_DRAFT');
+    for (const flags of [{ repeat: true }, { isComposing: true }]) {
+      await page.evaluate((flags) => {
+        document.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'r',
+            ctrlKey: true,
+            bubbles: true,
+            cancelable: true,
+            ...flags,
+          }),
+        );
+      }, flags);
+      assert.equal(
+        await page.locator('#question-input').inputValue(),
+        'FOCUS_TEST_PROTECTED_DRAFT',
+      );
+    }
+
+    // A pending AI request also blocks both repeated capture and clear actions.
+    holdResponse = true;
+    const beforeBusyRequests = requests.length;
+    const beforeBusyAnswers = (await storedAnswers()).length;
+    await prepare({ focused: false });
+    await trigger('CommandOrControl+E');
+    while (requests.length === beforeBusyRequests) await delay(20);
+    await trigger('CommandOrControl+E');
+    await trigger('CommandOrControl+R');
+    await delay(100);
+    assert.equal(requests.length, beforeBusyRequests + 1);
+    assert.equal(await page.locator('#question-input').inputValue(), 'FOCUS_TEST_PROTECTED_DRAFT');
+    await assertBackground();
+    holdResponse = false;
+    releaseResponse();
+    releaseResponse = null;
+    await waitForAnswer(beforeBusyAnswers + 1);
+
+    // The renderer fallback consumes Ctrl+R itself instead of refreshing Electron.
+    await prepare({ focused: true });
+    const prevented = await page.evaluate(() => {
+      window.__clearChatReloadMarker = 'same-renderer';
+      const event = new KeyboardEvent('keydown', {
+        key: 'r',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true,
+      });
+      document.dispatchEvent(event);
+      return event.defaultPrevented;
+    });
+    assert.equal(prevented, true);
+    await page.waitForFunction(async (id) => {
+      const state = await window.desktop.bootstrap();
+      return state.sessions.find((session) => session.id === id)?.messages.length === 0;
+    }, clearSessionId);
+    await waitIdle();
+    assert.equal(await page.evaluate(() => window.__clearChatReloadMarker), 'same-renderer');
+    assert.equal(await page.locator('#question-input').inputValue(), '');
+    assert.equal(
+      (await page.evaluate(() => window.desktop.bootstrap())).activeSessionId,
+      clearSessionId,
+    );
   },
 );

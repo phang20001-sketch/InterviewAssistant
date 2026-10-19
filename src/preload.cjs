@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('desktop', {
   createSession: (options) => invoke('create-session', options),
   switchSession: (id) => invoke('switch-session', id),
   deleteSession: (id) => invoke('delete-session', id),
+  clearCurrentSession: (id) => invoke('clear-current-session', id),
   clearSessions: () => invoke('clear-sessions'),
   ask: (question) => invoke('ask', question),
   startPractice: (options) => invoke('start-practice', options),

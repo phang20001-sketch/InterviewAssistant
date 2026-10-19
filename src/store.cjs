@@ -550,6 +550,19 @@ class Store {
     return this.snapshot();
   }
 
+  clearSession(id) {
+    const current = this.session(id);
+    if (current.mode === 'mock' || current.practice !== undefined)
+      throw new Error('此快捷键只清空面试助手聊天，模拟面试记录会保留。');
+    const next = clone(this.data);
+    const session = next.sessions.find((item) => item.id === id);
+    session.messages = [];
+    session.title = session.mode === 'coding' ? '截图解题' : '新的面试';
+    session.updatedAt = new Date().toISOString();
+    this.persist(next);
+    return this.snapshot();
+  }
+
   clearSessions() {
     const session = newSession();
     const next = clone(this.data);

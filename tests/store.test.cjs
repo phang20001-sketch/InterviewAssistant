@@ -147,6 +147,143 @@ test('deleting the active and last session preserves a usable workspace', (t) =>
   );
 });
 
+test('clearing one chat preserves its identity, other sessions and all shared local data', (t) => {
+  const directory = temporary(t);
+  let store = new Store(directory, encryption);
+  store.saveSettings({
+    apiKey: 'clear-current-chat-key',
+    transcriptionApiKey: 'clear-current-transcription-key',
+    resume: '应当保留的简历和项目经历',
+    role: '后端工程师',
+    targetCompany: '偏好的目标公司',
+    focusAreas: '系统设计与缓存一致性',
+    interviewDifficulty: 'challenging',
+    demoMode: false,
+  });
+  store.saveModelProfile({
+    name: '保留的第二个模型',
+    baseUrl: 'https://second.example/v1',
+    model: 'second-model',
+    apiKey: 'second-model-key',
+  });
+  const generation = {
+    questions: [
+      {
+        id: 'saved-question',
+        title: '如何验证缓存一致性？',
+        category: 'backend',
+        topic: '缓存',
+        level: '深入',
+        description: '结合已保存的简历回答。',
+        tags: ['缓存'],
+      },
+    ],
+    raw: '应当保留的模型题目原文',
+    model: 'saved-model',
+  };
+  store.appendQuestionBatch(generation);
+  store.createPractice(generation);
+  const id = store.createSession({ mode: 'interview' }).activeSessionId;
+  store.appendAnswer(id, '需要清空的问题', { content: '需要清空的回答' }, 'text');
+  const before = store.snapshot();
+  const current = store.session(id);
+  const vault = JSON.parse(fs.readFileSync(store.file, 'utf8')).vault;
+  const backup = path.join(directory, 'workspace.json.bak');
+  fs.writeFileSync(backup, '不属于单个聊天的备份');
+  const clearedAt = '2030-01-01T00:00:00.000Z';
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse(clearedAt) });
+  const after = store.clearSession(id);
+  t.mock.timers.reset();
+
+  assert.equal(after.activeSessionId, id);
+  assert.deepEqual(store.session(id), {
+    ...current,
+    messages: [],
+    title: '新的面试',
+    updatedAt: clearedAt,
+  });
+  assert.deepEqual(
+    after.sessions.filter((session) => session.id !== id),
+    before.sessions.filter((session) => session.id !== id),
+  );
+  assert.deepEqual(after.settings, before.settings);
+  assert.deepEqual(after.modelProfiles, before.modelProfiles);
+  assert.equal(after.activeModelProfileId, before.activeModelProfileId);
+  assert.deepEqual(after.questionBatches, before.questionBatches);
+  assert.deepEqual(JSON.parse(fs.readFileSync(store.file, 'utf8')).vault, vault);
+  assert.equal(fs.readFileSync(backup, 'utf8'), '不属于单个聊天的备份');
+  assert.equal(fs.readFileSync(store.file, 'utf8').includes('需要清空的问题'), false);
+  assert.equal(fs.readFileSync(store.file, 'utf8').includes('需要清空的回答'), false);
+
+  store = new Store(directory, encryption);
+  assert.deepEqual(store.snapshot(), after);
+  assert.equal(store.credential(), 'clear-current-chat-key');
+  assert.equal(store.credential('transcriptionApiKey'), 'clear-current-transcription-key');
+  store.appendAnswer(id, '清空后的新问题', { content: '清空后的新回答' }, 'text');
+  assert.equal(store.session(id).title, '清空后的新问题');
+  assert.equal(store.session(id).messages.length, 2);
+});
+
+test('clearing a coding chat restores its default title without switching the active chat', (t) => {
+  const store = new Store(temporary(t), encryption);
+  const id = store.createSession({ mode: 'coding' }).activeSessionId;
+  store.appendAnswer(id, '旧的截图问题', { content: '旧的截图回答' }, 'screenshot');
+  const current = store.session(id);
+  const active = store.createSession({ mode: 'interview' }).activeSessionId;
+  const after = store.clearSession(id);
+  assert.equal(after.activeSessionId, active);
+  assert.equal(store.session(id).id, id);
+  assert.equal(store.session(id).mode, 'coding');
+  assert.equal(store.session(id).createdAt, current.createdAt);
+  assert.equal(store.session(id).title, '截图解题');
+  assert.deepEqual(store.session(id).messages, []);
+});
+
+test('clearing a missing chat or a mock interview never modifies saved data', (t) => {
+  const store = new Store(temporary(t), encryption);
+  const mockId = store.createSession({ mode: 'mock' }).activeSessionId;
+  store.appendAnswer(mockId, '模拟面试回答', { content: '保留的点评' }, 'text');
+  store.saveSettings({ resume: '保留的简历' });
+  const practiceId = store.createPractice({
+    questions: [],
+    raw: '保留的面试生成原文',
+    model: 'practice-model',
+  });
+  const before = store.snapshot();
+  const serialized = fs.readFileSync(store.file, 'utf8');
+  assert.throws(() => store.clearSession('missing-session'), /没有找到/);
+  assert.throws(() => store.clearSession(mockId), /只清空面试助手聊天/);
+  assert.throws(() => store.clearSession(practiceId), /只清空面试助手聊天/);
+  assert.deepEqual(store.snapshot(), before);
+  assert.equal(fs.readFileSync(store.file, 'utf8'), serialized);
+});
+
+for (const operation of ['writeFileSync', 'renameSync']) {
+  test(`clearing a chat preserves memory and disk if ${operation} fails`, (t) => {
+    const directory = temporary(t);
+    const store = new Store(directory, encryption);
+    const id = store.snapshot().activeSessionId;
+    store.appendAnswer(id, '不能丢失的问题', { content: '不能丢失的回答' }, 'text');
+    const before = store.snapshot();
+    const serialized = fs.readFileSync(store.file, 'utf8');
+    const original = fs[operation];
+    const mock = t.mock.method(fs, operation, (...args) => {
+      const file = operation === 'renameSync' ? args[1] : args[0];
+      if (file === store.file || file === store.file + '.tmp')
+        throw Object.assign(new Error('test disk failure'), { code: 'EACCES' });
+      return original(...args);
+    });
+
+    assert.throws(() => store.clearSession(id), /无法保存本地数据/);
+    assert.deepEqual(store.snapshot(), before);
+    assert.equal(fs.readFileSync(store.file, 'utf8'), serialized);
+    assert.equal(fs.existsSync(store.file + '.tmp'), false);
+    mock.mock.restore();
+    assert.deepEqual(new Store(directory, encryption).snapshot(), before);
+    assert.deepEqual(store.clearSession(id).sessions[0].messages, []);
+  });
+}
+
 test('clearing sessions removes every old mode from disk and preserves encrypted settings', (t) => {
   const directory = temporary(t);
   const file = path.join(directory, 'workspace.json');
