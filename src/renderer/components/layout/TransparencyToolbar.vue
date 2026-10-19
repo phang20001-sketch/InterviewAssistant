@@ -19,7 +19,7 @@ const {
   changeTransparencyAppearance,
   flushTransparencyAppearance,
 } = useWorkspace();
-const { captureDisabled, captureLabel, captureAndAnswer } = useCaptureControls();
+const { captureDisabled, captureLabel, captureTitle, captureAndAnswer } = useCaptureControls();
 
 const sendDisabled = computed(
   () =>
@@ -53,7 +53,7 @@ const sendDisabled = computed(
         type="button"
         class="transparent-action transparent-capture-answer"
         aria-label="截取当前屏幕并让 AI 作答"
-        title="截取软件所在屏幕，提示 AI 优先返回题号和答案"
+        :title="captureTitle"
         :hidden="!windowState.transparentMode"
         :disabled="captureDisabled"
         @click="captureAndAnswer"

@@ -135,6 +135,7 @@ async function captureScreenImage({ sourceId, display } = {}) {
     throw new Error('窗口已关闭，请重新打开应用。');
   captureInProgress = true;
   const wasVisible = captureWindow.isVisible();
+  const wasFocused = captureWindow.isFocused();
   try {
     if (wasVisible) captureWindow.hide();
     // Allow the desktop compositor to remove our window before taking the image.
@@ -171,8 +172,8 @@ async function captureScreenImage({ sourceId, display } = {}) {
   } finally {
     captureInProgress = false;
     if (wasVisible && !captureWindow.isDestroyed()) {
-      captureWindow.show();
-      captureWindow.focus();
+      if (wasFocused) captureWindow.show();
+      else captureWindow.showInactive();
     }
   }
 }
@@ -583,27 +584,25 @@ async function ready() {
   createWindow();
   for (const [accelerator, action] of [
     ['CommandOrControl+Shift+H', 'capture'],
+    ['CommandOrControl+Alt+Enter', 'capture-answer'],
     ['CommandOrControl+Shift+Enter', 'ask'],
     ['CommandOrControl+Shift+N', 'new-session'],
   ]) {
     globalShortcut.register(accelerator, () => {
       if (!mainWindow) return;
-      mainWindow.show();
+      if (action === 'ask' || action === 'capture-answer') mainWindow.showInactive();
+      else mainWindow.show();
       mainWindow.webContents.send('studio:shortcut', { type: action });
     });
   }
   globalShortcut.register('CommandOrControl+Shift+Space', () => {
     if (!mainWindow) return;
     if (mainWindow.isVisible()) mainWindow.hide();
-    else {
-      mainWindow.show();
-      mainWindow.focus();
-    }
+    else mainWindow.showInactive();
   });
   globalShortcut.register('CommandOrControl+Shift+T', () => {
     if (!mainWindow || !windowMode || windowMode.recentlyChanged()) return;
-    if (mainWindow.isMinimized()) mainWindow.restore();
-    mainWindow.show();
+    mainWindow.showInactive();
     windowMode.setTransparentMode(!windowMode.state().transparentMode);
   });
 }

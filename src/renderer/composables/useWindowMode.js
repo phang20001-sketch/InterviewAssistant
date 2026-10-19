@@ -99,7 +99,7 @@ export function useWindowMode({ state, navigate, screenPicker, focusQuestion }) 
       navigate('assistant');
       if (entering) {
         await nextTick();
-        focusQuestion();
+        if (document.hasFocus()) focusQuestion();
       }
     }
   }

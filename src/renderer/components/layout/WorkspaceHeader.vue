@@ -5,7 +5,7 @@ import AppIcon from '../common/AppIcon.vue';
 import { useCaptureControls } from '../common/useCaptureControls.js';
 
 const { currentView, windowState, transparencyPending, toggleTransparentMode } = useWorkspace();
-const { captureDisabled, captureLabel, captureAndAnswer } = useCaptureControls();
+const { captureDisabled, captureLabel, captureTitle, captureAndAnswer } = useCaptureControls();
 
 const viewNames = {
   assistant: '面试助手',
@@ -27,7 +27,7 @@ const viewNames = {
         id="capture-answer"
         type="button"
         class="button capture-answer-button"
-        title="截取软件所在屏幕，提示 AI 优先返回题号和答案"
+        :title="captureTitle"
         :disabled="captureDisabled"
         @click="captureAndAnswer"
       >

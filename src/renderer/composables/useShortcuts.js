@@ -10,6 +10,7 @@ export function useShortcuts(workspace) {
     mockSubmit,
     navigate,
     askQuestion,
+    captureAndAnswer,
     chooseScreens,
     newSession,
     toggleTransparentMode,
@@ -29,7 +30,12 @@ export function useShortcuts(workspace) {
       return;
     }
     if (event.repeat || isBusy.value || !state.value || event.isComposing) return;
-    if (modifier && event.key === 'Enter') {
+    if (modifier && event.altKey && !event.shiftKey && event.key === 'Enter') {
+      event.preventDefault();
+      captureAndAnswer();
+      return;
+    }
+    if (modifier && !event.altKey && event.key === 'Enter') {
       event.preventDefault();
       if (currentView.value === 'mock') mockSubmit.value?.();
       else if (currentView.value === 'assistant') askQuestion();
@@ -48,6 +54,7 @@ export function useShortcuts(workspace) {
       navigate('assistant');
       chooseScreens();
     }
+    if (type === 'capture-answer') captureAndAnswer();
     if (type === 'ask') {
       navigate('assistant');
       askQuestion();
